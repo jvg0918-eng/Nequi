@@ -42,10 +42,11 @@ MISIONES = {
 
 def html_juego(mision_inicial: str = "m1", reinicio: int = 0) -> str:
     """
-    Devuelve el HTML original con una única adaptación: la misión inicial
-    se puede fijar desde Streamlit (el original la leía de location.hash,
-    que no existe dentro del iframe). El contador de reinicio fuerza a
-    Streamlit a recrear el iframe con una partida nueva.
+    Devuelve el HTML original con dos adaptaciones: la misión inicial se
+    puede fijar desde Streamlit (el original la leía de location.hash, que
+    no existe dentro del iframe) y se fija el tema oscuro de la app. El
+    contador de reinicio fuerza a Streamlit a recrear el iframe con una
+    partida nueva.
     """
     if mision_inicial not in MISIONES:
         raise ValueError("Misión desconocida.")
@@ -54,7 +55,9 @@ def html_juego(mision_inicial: str = "m1", reinicio: int = 0) -> str:
     if original not in html:
         raise RuntimeError("El HTML del juego cambió: no se encontró el punto de inicio de misión.")
     html = html.replace(original, f"const h0=(window.__mision||location.hash||'').replace('#','');")
-    return html.replace("<head>", f"<head><script>window.__mision='{mision_inicial}';/*partida {reinicio}*/</script>", 1)
+    # El tema oscuro de la app se fija también en el juego (sus variables ya lo soportan con data-theme).
+    return html.replace("<head>", f"<head><script>window.__mision='{mision_inicial}';"
+                                  f"document.documentElement.dataset.theme='dark';/*partida {reinicio}*/</script>", 1)
 
 
 # ---------------------------------------------------------- cálculo exacto ---

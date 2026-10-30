@@ -1,15 +1,15 @@
-﻿import numpy as np
+import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
 from core import juego_brecha as jb
-from ui.componentes import COLOR_PRIMARIO, COLOR_SECUNDARIO, _layout
+from ui.componentes import COLOR_PRIMARIO, COLOR_SECUNDARIO, _layout, cabecera
 
-st.title("Brecha Nequi · el juego del proyecto")
-st.caption("Juego de la última entrega. Un ninja intenta robar y el Guardián de Nequi lo detiene. Cada misión convierte en "
-           "jugada un concepto del proyecto: el costo de cada señal, el umbral de decisión, la estrategia evolutiva y el "
-           "equilibrio de Nash.")
+cabecera("Sprint 3 · Juego de la última entrega", "Brecha Nequi",
+         "Un ninja intenta robar y el Guardián de Nequi lo detiene. Cada misión convierte en jugada un concepto del "
+         "proyecto: el costo de cada señal, el umbral de decisión, la estrategia evolutiva y el equilibrio de Nash.")
+st.html('<div class="num">A · ANTES DE JUGAR</div>')
 
 # ============================================================ A. INTRODUCCIÓN ===
 ESCENA = """
@@ -67,7 +67,8 @@ with st.expander("Cómo empezar a jugar", expanded=False):
 
 # ================================================================ B. JUEGO ===
 st.divider()
-st.subheader("Jugar")
+st.html('<div class="num">B · JUEGO</div>')
+st.subheader("Jugar", anchor=False)
 st.session_state.setdefault("partida_brecha", 0)
 c1, c2, c3 = st.columns([1.4, 1, 2])
 mision = c1.selectbox("Empezar en", list(jb.MISIONES), format_func=jb.MISIONES.get, key="mision_brecha")
@@ -80,7 +81,8 @@ st.iframe(jb.html_juego(mision, st.session_state["partida_brecha"]), height="con
 
 # ========================================================== C. EXPLICACIÓN ===
 st.divider()
-st.subheader("Qué pasa por dentro y por qué")
+st.html('<div class="num">C · CÓMO FUNCIONA</div>')
+st.subheader("Qué pasa por dentro y por qué", anchor=False)
 st.caption("Todos los números de esta sección se calculan con la misma lógica del juego (enumeración exacta de las 256 "
            "combinaciones de señales), portada a Python en `core/juego_brecha.py`.")
 
@@ -89,8 +91,8 @@ t_flujo, t_m1, t_m2, t_m3, t_m4 = st.tabs(["Flujo de una jugada", "Misión 1", "
 with t_flujo:
     st.graphviz_chart("""
 digraph G {
-  rankdir=TB; nodesep=0.5; bgcolor="transparent"; node [shape=box, style="rounded,filled", fontname="sans-serif", fontsize=12, color="#999999"];
-  edge [fontname="sans-serif", fontsize=10, color="#888888"];
+  rankdir=TB; nodesep=0.5; bgcolor="transparent"; node [shape=box, style="rounded,filled", fontname="sans-serif", fontsize=12, color="#999999", fontcolor="#1d1a2e"];
+  edge [fontname="sans-serif", fontsize=10, color="#8a82ad", fontcolor="#c9c3e0"];
   {rank=same; a; f10;}
   a [label="Ninja elige señales\\nF2–F9 (+0.6 c/u)", fillcolor="#fde2ef"];
   f10 [label="F10 aparece\\n(40 %, no controlable)", fillcolor="#fde2ef"];
@@ -153,7 +155,27 @@ with t_m2:
     fig.add_vline(x=jb.UMBRAL_LAXO, line_dash="dash", line_color="gray", annotation_text="LAXO")
     fig.update_xaxes(title="Umbral del Guardián")
     fig.update_yaxes(title="Costo esperado por transacción")
+    st.markdown("##### Pruébalo: mueve el umbral y elige al ninja")
+    e1, e2 = st.columns([1.3, 1])
+    u_sel = e1.slider("Umbral del Guardián", 0.05, 0.70, 0.25, 0.005, key="m2_umbral")
+    estilo_sel = e2.radio("Ninja", list(jb.ESTILOS), index=1, horizontal=True, key="m2_estilo")
+    r_sel = jb.costo_exacto(u_sel, jb.ESTILOS[estilo_sel])
+    fig.add_trace(go.Scatter(x=[u_sel], y=[r_sel["costo"]], mode="markers", name="Tu elección",
+                             marker=dict(size=14, color="#FFFFFF", line=dict(width=3, color=COLOR_PRIMARIO))))
     st.plotly_chart(_layout(fig, 340), width="stretch")
+    _, _, opt_sel = jb.curva_costo(jb.ESTILOS[estilo_sel])
+    k = st.columns(4)
+    k[0].metric("Fraudes bloqueados", f"{r_sel['recall']:.0%}")
+    k[1].metric("Clientes bloqueados", f"{r_sel['fpr']:.1%}")
+    k[2].metric("Costo (×1000)", f"{r_sel['costo'] * 1000:.2f}",
+                f"{(r_sel['costo'] - opt_sel['costo']) * 1000:+.2f} vs. óptimo", delta_color="inverse")
+    k[3].metric("Umbral óptimo", f"{opt_sel['umbral']:.3f}")
+    if abs(r_sel["costo"] - opt_sel["costo"]) < 1e-4:
+        st.success("Diste con el umbral de menor costo contra este ninja. Ahora cambia de ninja: ¿sigue siendo el mejor?", icon="🎯")
+    elif r_sel["costo_clientes"] > r_sel["costo_fraude"]:
+        st.info("Aquí pesa más bloquear clientes legítimos que el fraude: sube el umbral.", icon="💡")
+    else:
+        st.info("Aquí pesa más el fraude que se cuela: baja el umbral.", icon="💡")
     st.dataframe(pd.DataFrame(resumen), hide_index=True, width="stretch",
                  column_config={c: st.column_config.NumberColumn(format="%.4f") for c in
                                 ("Costo óptimo", "Costo ESTRICTO (0.15)", "Costo LAXO (0.40)")})
@@ -167,8 +189,8 @@ with t_m3:
                 "contra tus últimos 4 ataques. Desde la oleada 3 aparece F10.")
     st.graphviz_chart("""
 digraph G {
-  rankdir=LR; bgcolor="transparent"; node [shape=box, style="rounded,filled", fontname="sans-serif", fontsize=11, color="#999999", fillcolor="#eef2f7"];
-  edge [fontname="sans-serif", fontsize=10, color="#888888"];
+  rankdir=LR; bgcolor="transparent"; node [shape=box, style="rounded,filled", fontname="sans-serif", fontsize=11, color="#999999", fillcolor="#eef2f7", fontcolor="#1d1a2e"];
+  edge [fontname="sans-serif", fontsize=10, color="#8a82ad", fontcolor="#c9c3e0"];
   o [label="Oleada: tus 60 fraudes\\ncon las señales que elegiste", fillcolor="#fde2ef"];
   e [label="1 · Evaluar\\n6 Guardianes vs. tus\\núltimos 4 ataques"];
   x [label="2 · Cruce intermedio\\nhijo entre dos padres"];
@@ -193,8 +215,8 @@ with t_m4:
     st.dataframe(tabla, width="stretch")
     st.graphviz_chart("""
 digraph G {
-  rankdir=LR; bgcolor="transparent"; node [shape=box, style="rounded,filled", fontname="sans-serif", fontsize=11, color="#999999"];
-  edge [fontname="sans-serif", fontsize=10, color="#888888"];
+  rankdir=LR; bgcolor="transparent"; node [shape=box, style="rounded,filled", fontname="sans-serif", fontsize=11, color="#999999", fontcolor="#1d1a2e"];
+  edge [fontname="sans-serif", fontsize=10, color="#8a82ad", fontcolor="#c9c3e0"];
   e [label="Nequi ESTRICTO", fillcolor="#dbeafe"]; s [label="Ninja SIGILOSO", fillcolor="#fde2ef"];
   l [label="Nequi LAXO", fillcolor="#dbeafe"]; a [label="Ninja AGRESIVO", fillcolor="#fde2ef"];
   e -> s [label="al ninja le conviene"]; s -> l [label="a Nequi le conviene"]; l -> a [label="al ninja le conviene"]; a -> e [label="a Nequi le conviene"];
@@ -210,7 +232,19 @@ digraph G {
                   annotation_text=f"p* = {eq['p_estricto']:.3f}")
     fig.update_xaxes(title="Probabilidad de que Nequi sea ESTRICTO (p)")
     fig.update_yaxes(title="Pago esperado del ninja")
+    st.markdown("##### Reto: encuentra la mezcla que no deja explotar a Nequi")
+    p_sel = st.slider("Probabilidad de que Nequi sea ESTRICTO", 0.0, 1.0, 0.80, 0.01, key="m4_p")
+    pago_ag, pago_si = p_sel * jb.B2[0, 0] + (1 - p_sel) * jb.B2[1, 0], p_sel * jb.B2[0, 1] + (1 - p_sel) * jb.B2[1, 1]
+    fig.add_vline(x=p_sel, line_color="#FFFFFF", line_width=2)
     st.plotly_chart(_layout(fig, 300, "Condición de indiferencia del ninja"), width="stretch")
+    if abs(pago_ag - pago_si) < 0.02:
+        st.success(f"¡Equilibrio! Con p = {p_sel:.2f} al ninja le da igual atacar agresivo ({pago_ag:.3f}) o sigiloso "
+                   f"({pago_si:.3f}): ya no puede aprovecharse de Nequi.", icon="⚖️")
+    else:
+        mejor_ninja = "AGRESIVO" if pago_ag > pago_si else "SIGILOSO"
+        st.warning(f"Con p = {p_sel:.2f} el ninja siempre jugaría **{mejor_ninja}** "
+                   f"({max(pago_ag, pago_si):.3f} frente a {min(pago_ag, pago_si):.3f}). Mueve p hasta que ambas líneas se crucen.",
+                   icon="🥷")
     k = st.columns(4)
     k[0].metric("P(Nequi ESTRICTO) = p*", f"{eq['p_estricto']:.3f}")
     k[1].metric("P(ninja AGRESIVO) = q*", f"{eq['q_agresivo']:.3f}")
@@ -222,3 +256,74 @@ digraph G {
     st.info("Esta matriz es la del notebook v3 que usa el juego (p* ≈ 0.533, q* ≈ 0.213). La página **3 · Teoría de juegos** "
             "calcula en vivo la versión v2 (p* ≈ 0.559, q* ≈ 0.214). Las dos coinciden en la dirección: Nequi mezcla cerca "
             "de mitad y mitad, y el ninja ataca de forma agresiva solo cerca de 1 de cada 5 veces.", icon="ℹ️")
+
+# ============================================== D. CONEXIÓN CON EL PROYECTO ===
+st.divider()
+st.html('<div class="num">D · CONEXIÓN CON EL PROYECTO</div>')
+st.subheader("Qué comparte el juego con el resto de la aplicación", anchor=False)
+st.caption("Solo se marca como lógica compartida lo que el juego realmente usa. Lo demás es una relación conceptual.")
+CONEXIONES = [
+    ("Sistema experto", "vistas/sistema_experto.py", True,
+     "F1 (biometría falsa) es un control obligatorio: bloquea siempre, como la regla crítica F1. Las señales F2–F9 son "
+     "las mismas del motor de fraude."),
+    ("Estrategia evolutiva", "vistas/evolutivo.py", True,
+     "El Guardián evoluciona con (μ+λ), cruce intermedio y σ autoadaptativo. En el juego, μ = 6 y λ = 16, y su fitness es "
+     "el costo contra tus últimos ataques; en el Sprint 3 la EE es (20+100) y maximiza el F1."),
+    ("Teoría de juegos", "vistas/juegos.py", True,
+     "Los pagos económicos (prevalencia 2 %, botín 1 + 0.6·k, costo 0.15 por cliente bloqueado) y el juego de inspección "
+     "2×2 son los mismos. El juego usa la matriz del notebook v3; esa página calcula la v2."),
+    ("Logística (A*)", "vistas/logistica.py", False,
+     "El juego no usa A*. La mejor jugada del ninja se halla recorriendo las 256 combinaciones, el mismo papel que cumple "
+     "la fuerza bruta cuando la página de logística verifica el orden óptimo que encuentra A*."),
+    ("Lógica difusa", "vistas/difuso.py", False,
+     "El Guardián decide con un umbral rígido: un punto más y bloquea. Esa frontera de golpe es justo la que la capa "
+     "difusa del Sprint 4 reemplaza por un riesgo gradual de 0 a 100."),
+]
+for fila in (CONEXIONES[:3], CONEXIONES[3:]):
+    for col, (nombre, pagina, comparte, texto) in zip(st.columns(3), fila):
+        with col, st.container(border=True, height="stretch"):
+            st.html(f'<span class="chip {"FAVORABLE" if comparte else "MEDIO"}">'
+                    f'{"Lógica compartida" if comparte else "Relación conceptual"}</span>')
+            st.page_link(pagina, label=nombre, icon=":material/arrow_forward:")
+            st.caption(texto)
+
+# ================================================= E. COMPRUEBA LO APRENDIDO ===
+st.divider()
+st.html('<div class="num">E · COMPRUEBA LO APRENDIDO</div>')
+st.subheader("Cuatro preguntas rápidas", anchor=False)
+st.caption("Las respuestas correctas se calculan con la lógica del juego. Si dudas, vuelve a jugar la misión indicada.")
+
+mejor = jb.mejor_combinacion()
+contra_agresivo = ("ESTRICTO (0.15)" if jb.costo_exacto(jb.UMBRAL_ESTRICTO, jb.ESTILOS["Agresivo"])["costo"]
+                   <= jb.costo_exacto(jb.UMBRAL_LAXO, jb.ESTILOS["Agresivo"])["costo"] else "LAXO (0.40)")
+eq = jb.equilibrio_inspeccion()
+PREGUNTAS = [
+    ("Misión 1", f"Contra el Guardián del juego (umbral {jb.NB['umbral']}), ¿cuántas señales F2–F9 le conviene recoger al ninja?",
+     ["Ninguna", "1", "2", "3", "Las 8"], {0: "Ninguna", 8: "Las 8"}.get(mejor["n_señales"], str(mejor["n_señales"])),
+     f"La mejor respuesta es {mejor['señales']}: pasa cuando F10 no aparece y deja un botín esperado de "
+     f"{mejor['botin_esperado']:.2f}. Con más señales el puntaje supera el umbral."),
+    ("Misión 2", "Contra un ninja agresivo, ¿qué umbral le cuesta menos a Nequi?",
+     ["ESTRICTO (0.15)", "LAXO (0.40)"], contra_agresivo,
+     "El agresivo activa muchas señales: el fraude que se cuela pesa más que los clientes bloqueados."),
+    ("Misión 3", "Si el ninja repite siempre la misma combinación de señales, ¿qué hace el Guardián?",
+     ["Nada, su umbral es fijo", "Sube el peso de esas señales y el botín cae", "Bloquea a todos los clientes"],
+     "Sube el peso de esas señales y el botín cae",
+     "Evoluciona contra tus últimos ataques: si no cambias, converge hacia tu ruta."),
+    ("Misión 4", "En el duelo simultáneo, ¿existe un equilibrio en estrategias puras?",
+     ["Sí", "No"], "Sí" if eq["puros"] else "No",
+     f"Las mejores respuestas forman un ciclo. El equilibrio es mixto: Nequi es estricto con p* ≈ {eq['p_estricto']:.3f}."),
+]
+aciertos = 0
+for i, (mision_q, pregunta, opciones, correcta, porque) in enumerate(PREGUNTAS):
+    with st.container(border=True):
+        st.html(f'<div class="paso">{mision_q}</div>')
+        resp = st.radio(pregunta, opciones, index=None, horizontal=max(map(len, opciones)) < 20, key=f"quiz_{i}")
+        if resp is not None:
+            if resp == correcta:
+                aciertos += 1
+                st.success(f"Correcto. {porque}", icon="✅")
+            else:
+                st.error(f"No exactamente. {porque}", icon="↩️")
+st.progress(aciertos / len(PREGUNTAS), text=f"{aciertos} de {len(PREGUNTAS)} correctas")
+if aciertos == len(PREGUNTAS):
+    st.balloons()

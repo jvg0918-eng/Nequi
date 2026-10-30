@@ -5,8 +5,8 @@ import numpy as np
 import plotly.graph_objects as go
 import streamlit as st
 
-COLOR_PRIMARIO = "#D91074"   # magenta usado en las gráficas del notebook de la EE
-COLOR_SECUNDARIO = "#167D9A"  # azul usado en las mismas gráficas
+COLOR_PRIMARIO = "#FF5FAE"   # magenta Nequi del juego Brecha Nequi y del tema (.streamlit/config.toml)
+COLOR_SECUNDARIO = "#4FB4FF"  # azul "info" del mismo juego; legible sobre el fondo oscuro
 COLORES_ETIQUETA = {"bajo": "#16A34A", "medio": "#F59E0B", "alto": "#DC2626",
                     "holgada": "#16A34A", "moderada": "#F59E0B", "excedida": "#DC2626",
                     "aceptable": "#16A34A", "excesivo": "#DC2626"}
@@ -23,26 +23,65 @@ DECISIONES = {
 
 CSS = """
 <style>
-.block-container {padding-top: 2.2rem; max-width: 1180px;}
+.block-container {padding-top: 3.2rem; max-width: 1180px;}
+h1 {letter-spacing: -.01em;}
 .dec {border-radius: 10px; padding: 14px 18px; margin: 4px 0 12px 0; border: 1px solid transparent;}
 .dec .lbl {font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; opacity: .75;}
 .dec .val {font-size: 1.45rem; font-weight: 650; margin-top: 2px;}
 .dec .why {font-size: .92rem; margin-top: 4px; opacity: .9;}
-.dec.ok   {background: rgba(22,163,74,.10);  border-color: rgba(22,163,74,.35);}
-.dec.warn {background: rgba(245,158,11,.12); border-color: rgba(245,158,11,.45);}
-.dec.bad  {background: rgba(220,38,38,.10);  border-color: rgba(220,38,38,.35);}
+.dec.ok   {background: rgba(53,226,160,.10); border-color: rgba(53,226,160,.40);}
+.dec.warn {background: rgba(255,204,77,.10); border-color: rgba(255,204,77,.45);}
+.dec.bad  {background: rgba(255,90,110,.10); border-color: rgba(255,90,110,.42);}
 .chip {display:inline-block; padding: 1px 8px; border-radius: 999px; font-size: .78rem;
        font-weight: 600; margin-right: 4px; border: 1px solid rgba(128,128,128,.35);}
-.chip.CRITICO, .chip.RECHAZO {color:#DC2626; border-color: rgba(220,38,38,.45);}
-.chip.MEDIO {color:#B45309; border-color: rgba(245,158,11,.55);}
-.chip.FAVORABLE {color:#16A34A; border-color: rgba(22,163,74,.45);}
-.paso {font-size:.8rem; color: #888; text-transform: uppercase; letter-spacing:.05em;}
+.chip.CRITICO, .chip.RECHAZO {color:#FF5A6E; border-color: rgba(255,90,110,.5);}
+.chip.MEDIO {color:#FFCC4D; border-color: rgba(255,204,77,.55);}
+.chip.FAVORABLE {color:#35E2A0; border-color: rgba(53,226,160,.5);}
+.paso, .ceja {font: 600 .74rem "IBM Plex Mono", monospace; color: #FF5FAE; text-transform: uppercase; letter-spacing: .14em;}
+.ceja {margin-bottom: .35rem;}
+.bajada {color: #AAA3C8; font-size: 1.08rem; max-width: 46em; margin-top: -.4rem;}
+.num {font: 600 .78rem "IBM Plex Mono", monospace; color: #8A82AD; letter-spacing: .1em;}
+[data-testid="stSidebarNav"] a[aria-current="page"] {background: linear-gradient(90deg, rgba(178,63,209,.30), rgba(255,95,174,.18));}
+[data-testid="stSidebarNav"] a[aria-current="page"] span {color: #fff;}
+[data-testid="stMetricValue"] {font-family: "Fraunces", Georgia, serif;}
+</style>
+"""
+
+# Llegada desde la portada: el telón magenta del ladrón se abre sobre el contenido.
+CSS_LLEGADA = """
+<style>
+@keyframes telon {0% {opacity: 1;} 100% {opacity: 0; visibility: hidden;}}
+@keyframes subir {0% {opacity: 0; transform: translateY(24px);} 100% {opacity: 1; transform: none;}}
+.stApp::after {content: ""; position: fixed; inset: 0; z-index: 999999; pointer-events: none;
+  background: radial-gradient(circle at 44% 60%, #ff5fae 0%, #b23fd1 45%, #0b0a14 100%);
+  animation: telon .9s ease-out .1s forwards;}
+[data-testid="stMainBlockContainer"] {animation: subir .9s cubic-bezier(.2,.7,.2,1) .25s both;}
+@media (prefers-reduced-motion: reduce) {.stApp::after {display: none;} [data-testid="stMainBlockContainer"] {animation: none;}}
+</style>
+"""
+
+# Portada a pantalla completa: sin barra lateral, cabecera ni márgenes.
+CSS_PORTADA = """
+<style>
+[data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"], [data-testid="stHeader"],
+[data-testid="stToolbar"], [data-testid="stDecoration"] {display: none !important;}
+[data-testid="stMain"], [data-testid="stMainBlockContainer"], .block-container {padding: 0 !important; max-width: 100% !important;}
+[data-testid="stMainBlockContainer"] [data-testid="stVerticalBlock"] {gap: 0 !important;}
+.stApp {background: #07060d;}
 </style>
 """
 
 
 def aplicar_estilos():
-    st.markdown(CSS, unsafe_allow_html=True)
+    st.html(CSS)
+
+
+def cabecera(ceja: str, titulo: str, bajada: str = ""):
+    """Encabezado de página con la jerarquía tipográfica común (ceja · título · bajada)."""
+    st.html(f'<div class="ceja">{ceja}</div>')
+    st.title(titulo, anchor=False)
+    if bajada:
+        st.html(f'<p class="bajada">{bajada}</p>')
 
 
 def tarjeta_decision(codigo: str, motivo: str = "", titulo: str = "Decisión"):

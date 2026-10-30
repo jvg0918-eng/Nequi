@@ -1,0 +1,113 @@
+/* Portada interactiva. Paleta y tipografías compartidas con el juego Brecha Nequi y con .streamlit/config.toml. */
+:host { display: block; }
+.portada {
+  --magenta: #ff5fae; --violeta: #b23fd1; --oro: #ffcc4d; --ok: #35e2a0; --tinta: #ece8f6; --tenue: #aaa3c8;
+  --x: 44%; --y: 55%;
+  position: relative; height: 100vh; height: 100dvh; min-height: 520px; overflow: hidden;
+  background: #07060d;
+  color: var(--tinta); font-family: "IBM Plex Sans", system-ui, sans-serif;
+  user-select: none; -webkit-user-select: none;
+}
+.escena { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+/* ---------- capas con profundidad ---------- */
+.capa-lejana, .capa-media, .boveda, .sensores { transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+.estrellas circle { animation: titila 3.2s ease-in-out infinite; }
+.estrellas circle:nth-child(3n) { animation-delay: 1.1s; }
+.estrellas circle:nth-child(3n+1) { animation-delay: 2s; }
+@keyframes titila { 50% { opacity: .25; } }
+.ventanas rect:nth-child(odd) { animation: titila 5s ease-in-out infinite; }
+
+.t-boveda { font: 600 30px "Fraunces", Georgia, serif; fill: #fff; letter-spacing: .08em; }
+.t-boveda-s { font: 500 15px "IBM Plex Mono", monospace; fill: #fff; opacity: .85; }
+.t-sensor { font: 600 16px "IBM Plex Mono", monospace; fill: var(--magenta); letter-spacing: .08em; }
+.t-saco { font: 700 64px "Fraunces", Georgia, serif; fill: #7a5826; }
+.t-alerta { font: 800 52px "Fraunces", Georgia, serif; fill: #0b0a14; }
+.t-shh { font: italic 600 26px "Fraunces", Georgia, serif; fill: var(--tenue); }
+
+.laser line { stroke: var(--magenta); stroke-width: 3; opacity: .55; stroke-dasharray: 10 8; animation: barrido 1.4s linear infinite; }
+@keyframes barrido { to { stroke-dashoffset: -36; } }
+.nodos circle { fill: var(--magenta); filter: drop-shadow(0 0 6px var(--magenta)); }
+
+/* ---------- el ladrón ---------- */
+.ladron { cursor: pointer; outline: none; }
+.ladron .cuerpo { transform-box: fill-box; transform-origin: 50% 100%; animation: puntillas 1.8s ease-in-out infinite;
+  transition: transform .25s ease; }
+@keyframes puntillas { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+.anillo { fill: none; stroke: var(--magenta); stroke-width: 4; opacity: 0; transform-box: fill-box; transform-origin: center;
+  animation: pulso 2.4s ease-out infinite; }
+.anillo-2 { animation-delay: 1.2s; }
+@keyframes pulso { 0% { opacity: .75; transform: scale(.82); } 100% { opacity: 0; transform: scale(1.08); } }
+.cejas, .sorpresa, .shh, .brazo-shh { transform-box: fill-box; transition: transform .25s ease, opacity .25s ease; }
+.sorpresa { opacity: 0; transform: scale(.3) rotate(-12deg); transform-origin: 0% 100%; }
+.pupila { transition: r .2s ease; }
+
+/* Al pasar el cursor (o con el foco del teclado): el ladrón se sabe descubierto */
+.portada.alerta .ladron .cuerpo { animation: none; transform: translateY(8px) scale(1.03, .97); }
+.portada.alerta .cejas { transform: translateY(-12px); }
+.portada.alerta .sorpresa { opacity: 1; transform: scale(1) rotate(0); }
+.portada.alerta .shh { opacity: 0; }
+.portada.alerta .anillo { stroke: var(--oro); animation-duration: 1.1s; }
+.portada.alerta .halo-ladron { opacity: .38; }
+.ladron:focus-visible .anillo { stroke: #4fb4ff; opacity: .9; animation: none; }
+.halo-ladron { transition: opacity .3s ease; }
+
+/* ---------- foco de linterna que sigue al cursor ---------- */
+.oscuridad { position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(circle at var(--x) var(--y), rgba(255,95,174,.10) 0, rgba(7,6,13,0) 170px, rgba(7,6,13,.50) 360px, rgba(7,6,13,.72) 100%);
+  transition: background .08s linear; }
+
+/* ---------- textos ---------- */
+.texto { position: absolute; left: clamp(20px, 5vw, 72px); top: clamp(24px, 9vh, 96px); max-width: min(31vw, 500px); pointer-events: none; }
+.ceja { font: 600 12px "IBM Plex Mono", monospace; letter-spacing: .16em; text-transform: uppercase; color: var(--magenta); margin-bottom: 14px; }
+.texto h1 { font-family: "Fraunces", Georgia, serif; font-weight: 650; font-size: clamp(34px, 4.6vw, 68px); line-height: 1.02; margin: 0;
+  text-wrap: balance; letter-spacing: -.01em; }
+.texto p { margin: 18px 0 0; font-size: clamp(15px, 1.25vw, 19px); line-height: 1.5; color: var(--tenue); max-width: 30em; }
+
+.pista { display: flex; align-items: flex-end; gap: 6px; margin-top: 26px; margin-left: 30%; color: var(--oro); opacity: 0;
+  transition: opacity .5s ease; }
+.pista.lista { opacity: 1; animation: flota 2.2s ease-in-out infinite; }
+.pista span { font: italic 600 clamp(17px, 1.5vw, 22px) "Fraunces", Georgia, serif; white-space: nowrap; }
+.flecha { width: clamp(70px, 7vw, 110px); height: auto; margin-bottom: -34px; }
+@keyframes flota { 50% { transform: translateY(-6px); } }
+.portada.alerta .pista { opacity: 0; }
+
+.pie { position: absolute; left: 0; right: 0; bottom: 0; display: flex; flex-wrap: wrap; gap: 6px 22px; justify-content: center;
+  padding: 14px 20px calc(14px + env(safe-area-inset-bottom, 0px)); font: 500 12px "IBM Plex Mono", monospace; letter-spacing: .06em;
+  color: var(--tenue); background: linear-gradient(180deg, transparent, rgba(7,6,13,.85)); pointer-events: none; }
+.pie-juego { color: var(--magenta); }
+
+/* ---------- al hacer clic: atrapado y transición ---------- */
+.sello { position: absolute; left: var(--sx, 50%); top: var(--sy, 42%); transform: translate(-50%, -50%) rotate(-10deg) scale(2.4); opacity: 0;
+  font: 700 clamp(44px, 8vw, 110px) "Fraunces", Georgia, serif; color: var(--ok); border: 6px solid var(--ok); border-radius: 18px;
+  padding: 2px 26px; letter-spacing: .02em; pointer-events: none; text-shadow: 0 0 30px rgba(53,226,160,.35); }
+.destello { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; }
+.iris { position: fixed; inset: 0; z-index: 1000; pointer-events: none;
+  background: radial-gradient(circle at var(--ix, 50%) var(--iy, 50%), #ff5fae 0%, #b23fd1 45%, #0b0a14 100%);
+  clip-path: circle(0 at var(--ix, 50%) var(--iy, 50%)); }
+
+.portada.atrapado .ladron .cuerpo { animation: salto .7s cubic-bezier(.3,1.6,.5,1) forwards; }
+@keyframes salto { 0% { transform: translateY(0); } 35% { transform: translateY(-70px) rotate(-6deg); } 100% { transform: translateY(0) scale(.96); } }
+.portada.atrapado .sorpresa { opacity: 1; transform: scale(1.15); }
+.portada.atrapado .sello { animation: sello .45s cubic-bezier(.2,1.4,.4,1) .12s forwards; }
+@keyframes sello { to { opacity: 1; transform: translate(-50%, -50%) rotate(-10deg) scale(1); } }
+.portada.atrapado .destello { animation: destello .35s ease-out; }
+@keyframes destello { 0% { opacity: .55; } 100% { opacity: 0; } }
+.portada.atrapado .laser line { stroke: var(--ok); opacity: .9; }
+.portada.atrapado .nodos circle { fill: var(--ok); filter: drop-shadow(0 0 8px var(--ok)); }
+.portada.atrapado .escudo-marca { stroke: #0f7d52; }
+.portada.atrapado .pista, .portada.atrapado .shh { opacity: 0; }
+.portada.saliendo .iris { transition: clip-path .75s cubic-bezier(.7,0,.3,1); clip-path: circle(150% at var(--ix, 50%) var(--iy, 50%)); }
+
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------- pantallas verticales: texto arriba, escena abajo ---------- */
+.portada.vertical .texto { max-width: none; right: 20px; top: clamp(20px, 6vh, 64px); }
+.portada.vertical .texto h1 { font-size: clamp(32px, 9vw, 52px); }
+.portada.vertical .pista { margin: 14px 0 0; }
+.portada.vertical .flecha { transform: rotate(35deg); margin-bottom: -50px; }
+.portada.vertical .pie { font-size: 10.5px; gap: 4px 12px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .portada *, .portada { animation: none !important; transition: none !important; }
+}

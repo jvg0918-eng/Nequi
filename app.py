@@ -2,15 +2,20 @@
 import streamlit as st
 
 from ui import estado
-from ui.componentes import aplicar_estilos
+from ui.componentes import CSS_PORTADA, aplicar_estilos
+
+REPOSITORIO = "https://github.com/mapsita123/TrabajoIA"
+APP_PUBLICADA = "https://nequi-ia-app-un3zhq5ntx3nx4cff94ksn.streamlit.app/"
 
 st.set_page_config(page_title="Nequi IA · Fundamentos de IA", page_icon="🛡️", layout="wide")
 aplicar_estilos()
 estado.init()
 
+portada = st.Page("vistas/portada.py", title="Portada", icon=":material/theater_comedy:", default=True)
 paginas = {
     "": [
-        st.Page("vistas/inicio.py", title="Inicio", icon=":material/home:", default=True),
+        portada,
+        st.Page("vistas/inicio.py", title="Inicio", icon=":material/home:", url_path="inicio"),
         st.Page("vistas/evaluar.py", title="Evaluar una solicitud", icon=":material/fact_check:"),
     ],
     "Componentes por sprint": [
@@ -26,7 +31,14 @@ paginas = {
     ],
 }
 
-st.navigation(paginas).run()
-
-st.sidebar.caption("Fundamentos de IA · Universidad EIA · 2026-2\n\n"
+pagina = st.navigation(paginas)
+if pagina.url_path == portada.url_path:
+    st.html(CSS_PORTADA)
+else:
+    with st.sidebar:
+        c1, c2 = st.columns(2)
+        c1.link_button("GitHub", REPOSITORIO, icon=":material/code:", width="stretch")
+        c2.link_button("App", APP_PUBLICADA, icon=":material/open_in_new:", width="stretch")
+        st.caption("Fundamentos de IA · Universidad EIA · 2026-2\n\n"
                    "Caso académico simulado. No usa datos ni sistemas reales de Nequi.")
+pagina.run()

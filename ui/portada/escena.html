@@ -1,0 +1,194 @@
+<div class="portada" data-estado="espera">
+  <svg class="escena" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="false" role="presentation">
+    <defs>
+      <linearGradient id="pt-cielo" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#07060d"/><stop offset=".55" stop-color="#1c1430"/><stop offset="1" stop-color="#2b1838"/>
+      </linearGradient>
+      <radialGradient id="pt-luna" cx=".5" cy=".5" r=".5">
+        <stop offset="0" stop-color="#fff4fb"/><stop offset=".6" stop-color="#ffd3ea"/><stop offset="1" stop-color="#ff5fae" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="pt-halo" cx=".5" cy=".5" r=".5">
+        <stop offset="0" stop-color="#ff5fae" stop-opacity=".35"/><stop offset="1" stop-color="#ff5fae" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="pt-boveda" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#2a2140"/><stop offset="1" stop-color="#15111f"/>
+      </linearGradient>
+      <linearGradient id="pt-pantalla" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#b23fd1"/><stop offset="1" stop-color="#ff5fae"/>
+      </linearGradient>
+      <clipPath id="pt-torso">
+        <path d="M-86,-300 Q-92,-196 -72,-186 L72,-186 Q92,-196 86,-300 Q62,-344 0,-346 Q-62,-344 -86,-300Z"/>
+      </clipPath>
+    </defs>
+
+    <!-- Cielo, estrellas y luna -->
+    <rect x="-1600" y="-1600" width="4800" height="1601" fill="#07060d"/>
+    <rect width="1600" height="900" fill="url(#pt-cielo)"/>
+    <g class="estrellas" fill="#fff">
+      <circle cx="120" cy="80" r="1.6"/><circle cx="260" cy="150" r="1.1"/><circle cx="420" cy="60" r="1.4"/>
+      <circle cx="610" cy="120" r="1"/><circle cx="880" cy="70" r="1.5"/><circle cx="990" cy="170" r="1"/>
+      <circle cx="1130" cy="50" r="1.3"/><circle cx="1290" cy="130" r="1.1"/><circle cx="1480" cy="90" r="1.6"/>
+      <circle cx="1540" cy="210" r="1"/><circle cx="60" cy="240" r="1"/><circle cx="720" cy="40" r="1.2"/>
+    </g>
+    <circle cx="1310" cy="170" r="130" fill="url(#pt-halo)"/>
+    <circle cx="1310" cy="170" r="58" fill="url(#pt-luna)"/>
+
+    <!-- Ciudad lejana (cerros y edificios) -->
+    <g class="capa-lejana" data-prof="6">
+      <path d="M-40,620 Q160,470 330,560 Q470,430 640,540 Q820,450 980,560 Q1180,470 1350,560 Q1500,500 1660,560 L1660,900 L-40,900Z" fill="#231a36"/>
+      <g fill="#2c2142">
+        <rect x="40" y="520" width="70" height="380"/><rect x="130" y="470" width="54" height="430"/><rect x="200" y="540" width="90" height="360"/>
+        <rect x="1250" y="500" width="64" height="400"/><rect x="1330" y="450" width="80" height="450"/><rect x="1430" y="530" width="70" height="370"/>
+        <rect x="1510" y="480" width="90" height="420"/>
+      </g>
+    </g>
+    <g class="capa-media" data-prof="12">
+      <g fill="#1a1428">
+        <rect x="-20" y="600" width="150" height="300"/><rect x="140" y="560" width="110" height="340"/><rect x="262" y="630" width="120" height="270"/>
+        <rect x="1380" y="590" width="130" height="310"/><rect x="1520" y="640" width="120" height="260"/>
+      </g>
+      <g class="ventanas" fill="#ffcc4d">
+        <rect x="20" y="640" width="14" height="18" opacity=".7"/><rect x="60" y="680" width="14" height="18" opacity=".35"/>
+        <rect x="170" y="600" width="12" height="16" opacity=".55"/><rect x="210" y="650" width="12" height="16" opacity=".8" fill="#ff5fae"/>
+        <rect x="300" y="670" width="14" height="18" opacity=".45"/><rect x="1410" y="630" width="14" height="18" opacity=".6"/>
+        <rect x="1460" y="680" width="14" height="18" opacity=".8" fill="#ff5fae"/><rect x="1560" y="690" width="14" height="18" opacity=".5"/>
+      </g>
+    </g>
+
+    <!-- Azotea -->
+    <rect y="770" width="1600" height="130" fill="#120f1d"/>
+    <rect y="770" width="1600" height="4" fill="#2a2640"/>
+    <g stroke="#2a2640" stroke-width="2"><line x1="0" y1="820" x2="1600" y2="820"/><line x1="0" y1="860" x2="1600" y2="860"/></g>
+
+    <!-- Bóveda digital: el teléfono con el dinero de los clientes -->
+    <g class="boveda" data-prof="18">
+      <rect x="1160" y="330" width="250" height="440" rx="34" fill="url(#pt-boveda)" stroke="#3a3256" stroke-width="3"/>
+      <rect x="1180" y="362" width="210" height="350" rx="16" fill="url(#pt-pantalla)" opacity=".92"/>
+      <rect x="1252" y="343" width="66" height="8" rx="4" fill="#3a3256"/>
+      <g class="escudo" transform="translate(1285,500)">
+        <path d="M0,-74 L58,-50 Q58,22 0,62 Q-58,22 -58,-50Z" fill="#0b0a14" opacity=".28"/>
+        <path d="M0,-62 L46,-42 Q46,16 0,50 Q-46,16 -46,-42Z" fill="#fff" opacity=".95"/>
+        <path class="escudo-marca" d="M-18,-4 L-4,12 L22,-20" fill="none" stroke="#b23fd1" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+      <text x="1285" y="612" text-anchor="middle" class="t-boveda">BÓVEDA</text>
+      <text x="1285" y="640" text-anchor="middle" class="t-boveda-s">saldo de los clientes</text>
+      <g fill="#ffcc4d" stroke="#a87708" stroke-width="2">
+        <ellipse cx="1210" cy="765" rx="26" ry="8"/><ellipse cx="1210" cy="755" rx="26" ry="8"/><ellipse cx="1210" cy="745" rx="26" ry="8"/>
+        <ellipse cx="1362" cy="765" rx="26" ry="8"/><ellipse cx="1362" cy="755" rx="26" ry="8"/>
+      </g>
+    </g>
+
+    <!-- Cerca de sensores: las señales F2–F9 del sistema antifraude -->
+    <g class="sensores" data-prof="14">
+      <g class="laser">
+        <line x1="1040" y1="420" x2="1040" y2="770"/><line x1="1080" y1="380" x2="1080" y2="770"/><line x1="1120" y1="420" x2="1120" y2="770"/>
+      </g>
+      <g class="nodos">
+        <circle cx="1040" cy="470" r="7"/><circle cx="1040" cy="600" r="7"/><circle cx="1040" cy="720" r="7"/>
+        <circle cx="1080" cy="430" r="7"/><circle cx="1080" cy="540" r="7"/><circle cx="1080" cy="660" r="7"/>
+        <circle cx="1120" cy="500" r="7"/><circle cx="1120" cy="640" r="7"/>
+      </g>
+      <text x="1080" y="360" text-anchor="middle" class="t-sensor">F2 – F9</text>
+    </g>
+
+    <!-- Halo del foco sobre el ladrón -->
+    <ellipse class="halo-ladron" cx="830" cy="765" rx="190" ry="26" fill="#ff5fae" opacity=".18"/>
+
+    <!-- EL LADRÓN (botón real: inicia la experiencia) -->
+    <g class="ladron-pos" transform="translate(830,770)">
+      <g class="ladron" id="ladron" role="button" tabindex="0" aria-label="Ladrón. Haz clic para atraparlo y entrar a la aplicación">
+        <circle class="anillo" cx="0" cy="-260" r="285"/>
+        <circle class="anillo anillo-2" cx="0" cy="-260" r="285"/>
+        <rect class="zona" x="-260" y="-560" width="460" height="580" fill="transparent"/>
+        <g class="cuerpo">
+          <ellipse cx="0" cy="0" rx="120" ry="16" fill="#000" opacity=".45"/>
+          <!-- Saco del botín (detrás del cuerpo) -->
+          <g class="saco">
+            <path d="M-118,-470 Q-218,-468 -222,-380 Q-226,-292 -138,-282 Q-58,-276 -54,-372 Q-50,-462 -118,-470Z" fill="#c99b5a" stroke="#7a5826" stroke-width="5"/>
+            <path d="M-84,-462 Q-70,-484 -92,-498" fill="none" stroke="#7a5826" stroke-width="6" stroke-linecap="round"/>
+            <text x="-138" y="-350" text-anchor="middle" class="t-saco">$</text>
+            <path d="M-190,-330 Q-176,-318 -160,-326" fill="none" stroke="#7a5826" stroke-width="4" stroke-linecap="round" opacity=".6"/>
+          </g>
+          <!-- Piernas en puntillas -->
+          <g stroke="#1d1a2e" stroke-width="46" stroke-linecap="round" fill="none">
+            <path class="pierna-i" d="M-36,-196 Q-52,-110 -76,-34"/>
+            <path class="pierna-d" d="M30,-196 Q78,-128 56,-46"/>
+          </g>
+          <ellipse cx="-92" cy="-18" rx="40" ry="17" fill="#0b0a14"/>
+          <ellipse cx="66" cy="-30" rx="38" ry="16" fill="#0b0a14" transform="rotate(-18 66 -30)"/>
+          <!-- Torso a rayas -->
+          <g clip-path="url(#pt-torso)">
+            <rect x="-100" y="-350" width="200" height="170" fill="#f2eef8"/>
+            <g fill="#1d1a2e">
+              <rect x="-100" y="-338" width="200" height="20"/><rect x="-100" y="-298" width="200" height="20"/>
+              <rect x="-100" y="-258" width="200" height="20"/><rect x="-100" y="-218" width="200" height="20"/>
+            </g>
+          </g>
+          <path d="M-86,-300 Q-92,-196 -72,-186 L72,-186 Q92,-196 86,-300 Q62,-344 0,-346 Q-62,-344 -86,-300Z" fill="none" stroke="#0b0a14" stroke-width="5"/>
+          <!-- Brazo que sostiene el saco -->
+          <path d="M-70,-310 Q-110,-360 -96,-430" fill="none" stroke="#1d1a2e" stroke-width="34" stroke-linecap="round"/>
+          <circle cx="-94" cy="-440" r="19" fill="#f0c39b" stroke="#0b0a14" stroke-width="4"/>
+          <!-- Brazo con el dedo en los labios: «shhh» -->
+          <g class="brazo-shh">
+            <path d="M72,-306 Q122,-262 50,-336" fill="none" stroke="#1d1a2e" stroke-width="32" stroke-linecap="round"/>
+            <rect x="38" y="-382" width="11" height="30" rx="5.5" fill="#f0c39b" stroke="#0b0a14" stroke-width="3"/>
+            <circle cx="46" cy="-342" r="17" fill="#f0c39b" stroke="#0b0a14" stroke-width="4"/>
+          </g>
+          <!-- Cabeza -->
+          <g class="cabeza">
+            <circle cx="0" cy="-408" r="80" fill="#f0c39b" stroke="#0b0a14" stroke-width="5"/>
+            <g fill="#8a6a50" opacity=".55">
+              <circle cx="-30" cy="-352" r="2.4"/><circle cx="-18" cy="-346" r="2.4"/><circle cx="-6" cy="-344" r="2.4"/>
+              <circle cx="8" cy="-344" r="2.4"/><circle cx="22" cy="-347" r="2.4"/><circle cx="-38" cy="-360" r="2.4"/>
+            </g>
+            <path class="boca" d="M-20,-360 Q-4,-350 14,-360" fill="none" stroke="#0b0a14" stroke-width="5" stroke-linecap="round"/>
+            <ellipse cx="-2" cy="-382" rx="11" ry="9" fill="#e2a87e"/>
+            <!-- Antifaz -->
+            <path d="M-84,-420 Q0,-446 84,-420 L82,-382 Q0,-402 -82,-382Z" fill="#121019"/>
+            <path class="cinta" d="M-80,-414 Q-122,-428 -136,-404 M-80,-396 Q-118,-392 -130,-372" fill="none" stroke="#121019" stroke-width="12" stroke-linecap="round"/>
+            <g class="ojos">
+              <ellipse cx="-34" cy="-404" rx="20" ry="16" fill="#fff"/>
+              <ellipse cx="34" cy="-404" rx="20" ry="16" fill="#fff"/>
+              <circle class="pupila" data-cx="-34" data-cy="-404" cx="-34" cy="-404" r="8" fill="#0b0a14"/>
+              <circle class="pupila" data-cx="34" data-cy="-404" cx="34" cy="-404" r="8" fill="#0b0a14"/>
+            </g>
+            <g class="cejas" stroke="#121019" stroke-width="8" stroke-linecap="round">
+              <path d="M-52,-432 L-18,-426"/><path d="M18,-426 L52,-432"/>
+            </g>
+            <!-- Gorro -->
+            <path d="M-82,-424 Q-84,-510 0,-512 Q84,-510 82,-424 Q0,-448 -82,-424Z" fill="#2b2540" stroke="#0b0a14" stroke-width="5"/>
+            <path d="M-82,-440 Q0,-466 82,-440 L82,-424 Q0,-450 -82,-424Z" fill="#ff5fae"/>
+            <circle cx="0" cy="-516" r="16" fill="#ff5fae" stroke="#0b0a14" stroke-width="4"/>
+          </g>
+          <!-- Reacciones -->
+          <g class="sorpresa">
+            <path d="M92,-520 Q160,-560 196,-512 Q214,-470 160,-462 L140,-440 L142,-466 Q96,-474 92,-520Z" fill="#ffcc4d" stroke="#0b0a14" stroke-width="4"/>
+            <text x="150" y="-490" text-anchor="middle" class="t-alerta">!</text>
+          </g>
+          <g class="shh"><text x="104" y="-366" class="t-shh">shhh…</text></g>
+        </g>
+      </g>
+    </g>
+  </svg>
+
+  <div class="oscuridad" aria-hidden="true"></div>
+
+  <header class="texto">
+    <div class="ceja">Fundamentos de IA · Universidad EIA · Caso Nequi simulado</div>
+    <h1>Alguien quiere colarse en&nbsp;Nequi.</h1>
+    <p>Cinco técnicas de inteligencia artificial lo esperan del otro lado. Atrápalo y descubre cómo lo detienen.</p>
+    <div class="pista" aria-hidden="true">
+      <span>Haz clic en el ladrón</span>
+      <svg viewBox="0 0 120 70" class="flecha"><path d="M6,12 C40,0 86,10 104,52" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><path d="M92,44 L105,56 L110,38" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+  </header>
+
+  <footer class="pie" aria-hidden="true">
+    <span>01 A*</span><span>02 Sistema experto</span><span>03 Estrategia evolutiva</span><span>04 Teoría de juegos</span><span>05 Lógica difusa</span><span class="pie-juego">+ el juego Brecha Nequi</span>
+  </footer>
+
+  <div class="sello" aria-hidden="true">¡Atrapado!</div>
+  <div class="destello" aria-hidden="true"></div>
+  <div class="iris" aria-hidden="true"></div>
+  <p class="sr" aria-live="polite"></p>
+</div>
