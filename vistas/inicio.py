@@ -19,20 +19,20 @@ st.html("""
   text-underline-offset: 8px;}
 .heroe p {color: #4a453d; font-size: clamp(1rem, 1.25vw, 1.15rem); max-width: 34em; margin-top: 1rem; line-height: 1.6;}
 .heroe .nota {display: inline-block; margin-top: .6rem; transform: rotate(-2deg);}
-.cifras {display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); border-top: 1.6px solid #1b1a17;
-  border-bottom: 1.6px solid #1b1a17; margin: .6rem 0 .4rem; overflow: hidden;}
-.cifras div {padding: 1rem; margin-left: -1px; border-left: 1.2px solid #1b1a17;}
+.cifras {display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); border-top: 1.2px solid #4A453D;
+  border-bottom: 1.2px solid #4A453D; margin: .6rem 0 .4rem; overflow: hidden;}
+.cifras div {padding: 1rem; margin-left: -1px; border-left: 1px solid #CFC3A9;}
 .cifras b {display: block; font: 600 1.9rem "Fraunces", Georgia, serif; color: #1b1a17;}
 .cifras span {font: 500 .74rem "IBM Plex Mono", monospace; color: #6b6458; text-transform: uppercase; letter-spacing: .08em;}
 .flujo {display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; margin: .6rem 0 .2rem;}
 @media (max-width: 820px) {.flujo {grid-template-columns: minmax(0, 1fr);}}
-.flujo div {position: relative; border: 1.6px solid var(--t, #1b1a17); padding: 1rem 1.05rem; background: var(--f, #f7f2e6); box-shadow: 4px 4px 0 var(--t, #1b1a17);
+.flujo div {position: relative; border: 1.2px solid var(--b, #CFC3A9); padding: 1rem 1.05rem; background: var(--f, #f7f2e6); box-shadow: inset 4px 0 0 var(--t, #4A453D), 0 8px 20px -14px rgba(27,26,23,.35);
   border-radius: 255px 14px 225px 14px / 14px 225px 14px 255px;}
 .flujo div::after {content: "→"; position: absolute; right: -16px; top: 50%; transform: translate(50%, -50%);
   color: #c8322a; font: 700 1.6rem "Caveat", cursive;}
 .flujo div:last-child::after {content: none;}
 @media (max-width: 820px) {.flujo div::after {content: "↓"; right: 50%; top: auto; bottom: -16px; transform: translate(50%, 50%);}}
-.flujo small {font: 600 .7rem "IBM Plex Mono", monospace; color: var(--t, #c8322a); letter-spacing: .12em; text-transform: uppercase;}
+.flujo small {font: 600 .7rem "IBM Plex Mono", monospace; color: var(--x, #A3281F); letter-spacing: .12em; text-transform: uppercase;}
 .flujo strong {display: block; font: 600 1.15rem "Fraunces", Georgia, serif; margin: .25rem 0 .35rem; color: #1b1a17;}
 .flujo p {margin: 0; color: #4a453d; font-size: .9rem; line-height: 1.45;}
 .flujo .fin {font: 700 1.15rem "Caveat", cursive; color: #c8322a; margin-top: .45rem;}
@@ -106,10 +106,10 @@ with der:
 seccion("02", "El recorrido de una solicitud", tono="azul")
 st.html("""
 <div class="flujo">
-  <div style="--t:#C8322A;--f:#F6DCD5"><small>Sprint 2</small><strong>Motor de fraude</strong><p>Nueve reglas de identidad (F1–F9). Una alerta crítica o dos medias detienen el proceso.</p><p class="fin">→ rechazo o revisión</p></div>
-  <div style="--t:#946508;--f:#F3E6C4"><small>Sprint 3</small><strong>Score calibrado</strong><p>Las mismas señales pasan por un score cuyos pesos y umbral ajustó la estrategia evolutiva (μ+λ).</p><p class="fin">→ segunda opinión</p></div>
-  <div style="--t:#C8322A;--f:#F6DCD5"><small>Sprint 2</small><strong>Motor de crédito</strong><p>Nueve reglas financieras (C1–C9). Mora, antigüedad, ingreso mínimo y embargos son filtros rígidos.</p><p class="fin">→ decisión clásica</p></div>
-  <div style="--t:#2F7D4F;--f:#DBE9DD"><small>Sprint 4</small><strong>Capa difusa</strong><p>Score, carga de la cuota y endeudamiento se combinan con lógica difusa (Mamdani).</p><p class="fin">→ riesgo 0–100</p></div>
+  <div style="--t:#C8322A;--f:#EDD8C8;--b:#DF978A;--x:#A3281F"><small>Sprint 2</small><strong>Motor de fraude</strong><p>Nueve reglas de identidad (F1–F9). Una alerta crítica o dos medias detienen el proceso.</p><p class="fin">→ rechazo o revisión</p></div>
+  <div style="--t:#8C6A1E;--f:#E7DDC6;--b:#C4B085;--x:#6F5414"><small>Sprint 3</small><strong>Score calibrado</strong><p>Las mismas señales pasan por un score cuyos pesos y umbral ajustó la estrategia evolutiva (μ+λ).</p><p class="fin">→ segunda opinión</p></div>
+  <div style="--t:#C8322A;--f:#EDD8C8;--b:#DF978A;--x:#A3281F"><small>Sprint 2</small><strong>Motor de crédito</strong><p>Nueve reglas financieras (C1–C9). Mora, antigüedad, ingreso mínimo y embargos son filtros rígidos.</p><p class="fin">→ decisión clásica</p></div>
+  <div style="--t:#4A7657;--f:#E0DECC;--b:#A6B69E;--x:#3B6347"><small>Sprint 4</small><strong>Capa difusa</strong><p>Score, carga de la cuota y endeudamiento se combinan con lógica difusa (Mamdani).</p><p class="fin">→ riesgo 0–100</p></div>
 </div>
 """)
 st.caption("Antes de todo esto, el Sprint 1 resuelve con A* cómo llega la tarjeta física al cliente, y el Sprint 3 pone a "

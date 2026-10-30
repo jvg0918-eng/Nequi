@@ -11,24 +11,25 @@ COLOR_PRIMARIO = "#C8322A"   # rojo del hilo de la ilustración (assets/ladron_t
 COLOR_SECUNDARIO = "#1B1A17"  # tinta negra del mismo dibujo
 TINTA, PAPEL, ROJO = "#1B1A17", "#F1EAD9", "#C8322A"
 PAPEL_CLARO, PAPEL_OSCURO = "#F7F2E6", "#E8DFCA"
-AZUL, ORO, VERDE, GRIS = "#2B5C9E", "#B07A10", "#2F7D4F", "#8A7F6C"
+AZUL, ORO, VERDE, GRIS = "#3E6489", "#8C6A1E", "#4A7657", "#8A7F6C"   # tonos apagados, como tinta sobre papel
+SOMBRA = "0 1px 0 rgba(27,26,23,.05), 0 8px 20px -14px rgba(27,26,23,.35)"   # sombra suave común
 
-# Guía cromática: cada tono tiene un color de trazo (texto, bordes, acentos) y un fondo suave.
-# Todos los trazos cumplen contraste ≥ 4.5:1 sobre su fondo y sobre el papel.
+# Guía cromática derivada de la portada (papel, tinta y el rojo del hilo). Cada tono tiene:
+# acento (trazos y valores grandes), fondo (10 % del acento sobre el papel), borde (45 %) y
+# texto (variante oscura con contraste ≥ 4.5:1 sobre su fondo). Solo el rojo es un acento intenso.
 TONOS = {
-    "rojo": ("#C8322A", "#F6DCD5"),
-    "azul": ("#2B5C9E", "#DCE5F1"),
-    "oro": ("#946508", "#F3E6C4"),
-    "verde": ("#2F7D4F", "#DBE9DD"),
-    "tinta": ("#1B1A17", "#E8DFCA"),
+    "rojo": ("#C8322A", "#EDD8C8", "#DF978A", "#A3281F"),
+    "azul": ("#3E6489", "#DFDDD1", "#A0AEB5", "#3E6489"),
+    "oro": ("#8C6A1E", "#E7DDC6", "#C4B085", "#6F5414"),
+    "verde": ("#4A7657", "#E0DECC", "#A6B69E", "#3B6347"),
+    "tinta": ("#4A453D", "#E0DAC9", "#A6A093", "#4A453D"),
 }
 # Un tono por módulo: así cada sección se reconoce por su color en el menú, el inicio y su página.
 TONO_MODULO = {"logistica": "azul", "sistema_experto": "rojo", "evolutivo": "oro", "juegos": "tinta",
                "juego": "rojo", "difuso": "verde", "evaluar": "rojo", "validacion": "verde"}
 
-COLORES_ETIQUETA = {"bajo": "#2F7D4F", "medio": "#B07A10", "alto": "#C8322A",
-                    "holgada": "#2F7D4F", "moderada": "#B07A10", "excedida": "#C8322A",
-                    "aceptable": "#2F7D4F", "excesivo": "#C8322A"}
+COLORES_ETIQUETA = {"bajo": VERDE, "medio": ORO, "alto": ROJO, "holgada": VERDE, "moderada": ORO, "excedida": ROJO,
+                    "aceptable": VERDE, "excesivo": ROJO}
 
 DECISIONES = {
     "APROBADO": ("Aprobado", "ok"),
@@ -44,15 +45,16 @@ _MANO = "255px 14px 225px 14px / 14px 225px 14px 255px"   # esquinas irregulares
 
 
 def _css_tonos() -> str:
-    """Tarjetas por tono: st.container(key="t_<tono>_...") recibe fondo, borde y sombra de su color."""
+    """Tarjetas por tono: st.container(key="t_<tono>_...") recibe fondo, borde fino y franja de su color."""
     reglas = []
-    for nombre, (trazo, fondo) in TONOS.items():
+    for nombre, (acento, fondo, borde, texto) in TONOS.items():
         k = f'[class*="st-key-t_{nombre}"]'
-        reglas.append(f"{k} {{background: {fondo}; border: 1.6px solid {trazo} !important; border-radius: {_MANO} !important;"
-                      f" box-shadow: 4px 4px 0 {trazo}; padding: 1rem 1.1rem !important;}}")
+        reglas.append(f"{k} {{background: {fondo}; border: 1.2px solid {borde} !important; border-radius: {_MANO} !important;"
+                      f" box-shadow: inset 4px 0 0 {acento}, {SOMBRA}; padding: 1rem 1.1rem !important;}}")
         reglas.append(f"{k} [data-testid=\"stMetric\"] {{background: transparent; border: none; box-shadow: none; padding: 0;}}")
-        reglas.append(f"{k} [data-testid=\"stMetricValue\"], {k} .ceja, {k} .paso {{color: {trazo};}}")
-        reglas.append(f".chip.t-{nombre} {{color: {trazo}; border-color: {trazo}; background: {fondo};}}")
+        reglas.append(f"{k} [data-testid=\"stMetricValue\"] {{color: {acento};}}")
+        reglas.append(f"{k} .ceja, {k} .paso {{color: {texto};}}")
+        reglas.append(f".chip.t-{nombre} {{color: {texto}; border-color: {borde}; background: {fondo};}}")
     return "\n".join(reglas)
 
 
@@ -71,49 +73,49 @@ h1 {letter-spacing: -.01em;}
 .nota {font: 600 1.35rem "Caveat", cursive; color: #C8322A;}
 .seccion {display: flex; align-items: center; gap: .8rem; margin: 1.6rem 0 .4rem;}
 .seccion .insignia {flex: 0 0 auto; display: grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: 50%;
-  background: var(--t); color: #fff; font: 700 1.25rem "Caveat", cursive; box-shadow: 2px 2px 0 #1B1A17;}
+  background: var(--t); color: #fff; font: 700 1.25rem "Caveat", cursive;}
 .seccion h2 {margin: 0; padding: 0; font: 600 1.55rem "Fraunces", Georgia, serif; color: #1B1A17; line-height: 1.15;}
 .seccion p {margin: .1rem 0 0; color: #4a453d; font-size: .95rem;}
 
 /* ---------- tarjetas y bloques a mano ---------- */
-[data-testid="stExpander"] details, .dec {border: 1.6px solid #2b2824 !important; border-radius: """ + _MANO + """ !important;}
+[data-testid="stExpander"] details, .dec {border: 1.2px solid #CFC3A9 !important; border-radius: """ + _MANO + """ !important;}
 [data-testid="stExpander"] details {background: #F7F2E6;}
-[data-testid="stExpander"] summary {background: #E8DFCA; font-weight: 600;}
+[data-testid="stExpander"] summary {background: #EDE5D3; font-weight: 600;}
 .dec {padding: 14px 18px; margin: 4px 0 12px 0; background: #F7F2E6;}
 .dec .lbl {font: 600 .74rem "IBM Plex Mono", monospace; text-transform: uppercase; letter-spacing: .1em; opacity: .75;}
 .dec .val {font: 650 1.5rem "Fraunces", Georgia, serif; margin-top: 2px;}
 .dec .why {font-size: .92rem; margin-top: 4px;}
-.dec.ok   {background: #DBE9DD; border-color: #2F7D4F !important; box-shadow: 4px 4px 0 #2F7D4F;}
-.dec.ok .val {color: #2F7D4F;}
-.dec.warn {background: #F3E6C4; border-color: #946508 !important; box-shadow: 4px 4px 0 #946508;}
-.dec.warn .val {color: #7a5306;}
-.dec.bad  {background: #F6DCD5; border-color: #C8322A !important; box-shadow: 4px 4px 0 #C8322A;}
-.dec.bad .val {color: #A82820;}
+.dec.ok   {background: #E0DECC; border-color: #A6B69E !important; box-shadow: inset 4px 0 0 #4A7657;}
+.dec.ok .val {color: #3B6347;}
+.dec.warn {background: #E7DDC6; border-color: #C4B085 !important; box-shadow: inset 4px 0 0 #8C6A1E;}
+.dec.warn .val {color: #6F5414;}
+.dec.bad  {background: #EDD8C8; border-color: #DF978A !important; box-shadow: inset 4px 0 0 #C8322A;}
+.dec.bad .val {color: #A3281F;}
 .chip {display:inline-block; padding: 1px 9px; border-radius: 999px; font-size: .78rem; font-weight: 600; margin-right: 4px;
-       border: 1.4px solid #2b2824; background: #F7F2E6;}
-.chip.CRITICO, .chip.RECHAZO {color:#A82820; border-color: #C8322A; background: #F6DCD5;}
-.chip.MEDIO {color:#7a5306; border-color: #946508; background: #F3E6C4;}
-.chip.FAVORABLE {color:#2F7D4F; border-color: #2F7D4F; background: #DBE9DD;}
+       border: 1.2px solid #A6A093; background: #F7F2E6;}
+.chip.CRITICO, .chip.RECHAZO {color:#A3281F; border-color: #DF978A; background: #EDD8C8;}
+.chip.MEDIO {color:#6F5414; border-color: #C4B085; background: #E7DDC6;}
+.chip.FAVORABLE {color:#3B6347; border-color: #A6B69E; background: #E0DECC;}
 """ + _css_tonos() + """
 
 /* ---------- métricas como fichas ---------- */
-[data-testid="stMetric"] {background: #F7F2E6; border: 1.4px solid #1B1A17; border-radius: 10px; padding: .7rem .9rem;
-  box-shadow: 3px 3px 0 #1B1A17;}
+[data-testid="stMetric"] {background: #F7F2E6; border: 1.2px solid #D9CFB9; border-radius: 10px; padding: .7rem .9rem;
+  box-shadow: """ + SOMBRA + """;}
 [data-testid="stMetricValue"] {font-family: "Fraunces", Georgia, serif; color: #1B1A17;}
 [data-testid="stMetricLabel"] p {font: 600 .72rem "IBM Plex Mono", monospace !important; text-transform: uppercase; letter-spacing: .08em;}
 
 /* ---------- botones: acción principal en rojo, secundaria en tinta ---------- */
-[data-testid^="stBaseButton-primary"] {box-shadow: 3px 3px 0 #1B1A17; border: 1.6px solid #1B1A17 !important; font-weight: 600;}
+[data-testid^="stBaseButton-primary"] {box-shadow: 2px 2px 0 rgba(27,26,23,.22); font-weight: 600;}
 [data-testid^="stBaseButton-secondary"], [data-testid^="stBaseLinkButton-secondary"] {background: #F7F2E6;
-  border: 1.6px solid #1B1A17 !important; box-shadow: 3px 3px 0 #1B1A17; font-weight: 600;}
-[data-testid^="stBaseButton-secondary"]:hover, [data-testid^="stBaseLinkButton-secondary"]:hover {background: #F6DCD5;
-  color: #A82820 !important; border-color: #C8322A !important; box-shadow: 3px 3px 0 #C8322A;}
-[data-testid^="stBaseButton"]:active, [data-testid^="stBaseLinkButton"]:active {transform: translate(2px, 2px); box-shadow: 1px 1px 0 #1B1A17;}
+  border: 1.2px solid #4A453D !important; box-shadow: 2px 2px 0 rgba(27,26,23,.14); font-weight: 600;}
+[data-testid^="stBaseButton-secondary"]:hover, [data-testid^="stBaseLinkButton-secondary"]:hover {background: #EDD8C8;
+  color: #A3281F !important; border-color: #C8322A !important;}
+[data-testid^="stBaseButton"]:active, [data-testid^="stBaseLinkButton"]:active {transform: translate(1px, 1px); box-shadow: none;}
 button[data-variant="segmented_control"] {background: #F7F2E6; font-weight: 600;}
 button[data-variant="segmented_control"][aria-checked="true"], button[data-variant="segmented_control"][data-selected] {
-  background: #C8322A !important; color: #fff !important; border-color: #1B1A17 !important;}
-[data-testid="stPageLink-NavLink"] {background: #F7F2E6; border: 1.4px solid #1B1A17; border-radius: 8px; box-shadow: 2px 2px 0 #1B1A17;}
-[data-testid="stPageLink-NavLink"]:hover {background: #F6DCD5; border-color: #C8322A; box-shadow: 2px 2px 0 #C8322A;}
+  background: #C8322A !important; color: #fff !important; border-color: #C8322A !important;}
+[data-testid="stPageLink-NavLink"] {background: #F7F2E6; border: 1.2px solid #CFC3A9; border-radius: 8px;}
+[data-testid="stPageLink-NavLink"]:hover {background: #EDD8C8; border-color: #DF978A;}
 
 /* ---------- pestañas ---------- */
 [data-testid="stTab"] {font-weight: 500;}
@@ -121,27 +123,23 @@ button[data-variant="segmented_control"][aria-checked="true"], button[data-varia
 [data-testid="stTab"][aria-selected="true"] p {font-weight: 700;}
 
 /* ---------- mensajes: cada tipo con su color de la guía ---------- */
-[data-testid="stAlertContainer"] {border-radius: 10px; border: 1.4px solid; border-left-width: 6px;}
-[data-testid="stAlertContainer"]:has([data-testid="stAlertContentInfo"]) {background: #DCE5F1; border-color: #2B5C9E; color: #1d3f6e;}
-[data-testid="stAlertContainer"]:has([data-testid="stAlertContentSuccess"]) {background: #DBE9DD; border-color: #2F7D4F; color: #1f5636;}
-[data-testid="stAlertContainer"]:has([data-testid="stAlertContentWarning"]) {background: #F3E6C4; border-color: #946508; color: #5e4105;}
-[data-testid="stAlertContainer"]:has([data-testid="stAlertContentError"]) {background: #F6DCD5; border-color: #C8322A; color: #8a1f18;}
+[data-testid="stAlertContainer"] {border-radius: 10px; border: 1px solid; border-left-width: 4px;}
+[data-testid="stAlertContainer"]:has([data-testid="stAlertContentInfo"]) {background: #DFDDD1; border-color: #A0AEB5; border-left-color: #3E6489; color: #2c4a66;}
+[data-testid="stAlertContainer"]:has([data-testid="stAlertContentSuccess"]) {background: #E0DECC; border-color: #A6B69E; border-left-color: #4A7657; color: #2f5039;}
+[data-testid="stAlertContainer"]:has([data-testid="stAlertContentWarning"]) {background: #E7DDC6; border-color: #C4B085; border-left-color: #8C6A1E; color: #5a440f;}
+[data-testid="stAlertContainer"]:has([data-testid="stAlertContentError"]) {background: #EDD8C8; border-color: #DF978A; border-left-color: #C8322A; color: #8a2119;}
 [data-testid="stAlertContainer"] p {color: inherit;}
 
 /* ---------- gráficos, tablas y diagramas sobre papel claro ---------- */
 [data-testid="stPlotlyChart"], [data-testid="stGraphVizChart"] {background: #F7F2E6; border: 1.4px solid #cfc3a9; border-radius: 10px; padding: 4px;}
-[data-testid="stDataFrame"] {border: 1.4px solid #1B1A17; border-radius: 8px; overflow: hidden;}
+[data-testid="stDataFrame"] {border: 1.2px solid #CFC3A9; border-radius: 8px; overflow: hidden;}
 
-/* ---------- barra lateral en tinta ---------- */
-[data-testid="stSidebarNav"] a[aria-current="page"] {background: rgba(239,106,94,.16); box-shadow: inset 4px 0 0 #EF6A5E;}
-[data-testid="stSidebarNav"] a[aria-current="page"] span {color: #FFFFFF; font-weight: 700;}
-[data-testid="stSidebarNav"] a:hover {background: rgba(241,234,217,.08);}
-[data-testid="stNavSectionHeader"] {color: #E0B85A !important; font: 600 .72rem "IBM Plex Mono", monospace !important;
+/* ---------- barra lateral en papel oscuro, como el pie de la portada ---------- */
+[data-testid="stSidebarNav"] a[aria-current="page"] {background: rgba(200,50,42,.08); box-shadow: inset 3px 0 0 #C8322A;}
+[data-testid="stSidebarNav"] a[aria-current="page"] span {color: #A3281F; font-weight: 700;}
+[data-testid="stNavSectionHeader"] {color: #8C6A1E !important; font: 600 .72rem "IBM Plex Mono", monospace !important;
   text-transform: uppercase; letter-spacing: .12em;}
-[data-testid="stSidebar"] [data-testid^="stBaseLinkButton-secondary"] {background: transparent; color: #F1EAD9; border-color: #F1EAD9 !important;
-  box-shadow: 3px 3px 0 #EF6A5E;}
-[data-testid="stSidebar"] [data-testid^="stBaseLinkButton-secondary"]:hover {background: #EF6A5E; color: #1B1A17 !important;}
-hr {border-color: #2b2824 !important; opacity: .35;}
+hr {border-color: #4A453D !important; opacity: .25;}
 </style>
 """
 

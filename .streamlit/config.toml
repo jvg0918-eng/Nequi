@@ -8,7 +8,7 @@ backgroundColor = "#f1ead9"
 secondaryBackgroundColor = "#e8dfca"
 textColor = "#1b1a17"
 linkColor = "#c8322a"
-borderColor = "#3a352d"
+borderColor = "#B9AD93"
 showWidgetBorder = true
 baseRadius = "6px"
 font = "IBM Plex Sans:https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap, sans-serif"
@@ -16,20 +16,18 @@ headingFont = "Fraunces:https://fonts.googleapis.com/css2?family=Fraunces:opsz,w
 codeFont = "IBM Plex Mono:https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap, monospace"
 headingFontWeights = [650, 600, 600, 600, 600, 600]
 redColor = "#c8322a"
-orangeColor = "#b07a10"
-yellowColor = "#b07a10"
-blueColor = "#2b5c9e"
-greenColor = "#2f7d4f"
-chartCategoricalColors = ["#c8322a", "#2b5c9e", "#b07a10", "#2f7d4f", "#1b1a17", "#d98c80", "#8a7f6c"]
+orangeColor = "#8c6a1e"
+yellowColor = "#8c6a1e"
+blueColor = "#3e6489"
+greenColor = "#4a7657"
+chartCategoricalColors = ["#c8322a", "#3e6489", "#8c6a1e", "#4a7657", "#4a453d", "#df978a", "#a6a093"]
 
-# Barra lateral en tinta: máximo contraste con el papel del área principal.
+# Barra lateral en papel oscuro: se distingue del área principal sin romper la calma de la portada.
 [theme.sidebar]
-backgroundColor = "#1b1a17"
-secondaryBackgroundColor = "#2c2924"
-textColor = "#f1ead9"
-primaryColor = "#ef6a5e"
-linkColor = "#ef6a5e"
-borderColor = "#5a544a"
+backgroundColor = "#E9E1CF"
+secondaryBackgroundColor = "#E0D7C2"
+textColor = "#1b1a17"
+borderColor = "#CFC3A9"
 
 [client]
 toolbarMode = "minimal"

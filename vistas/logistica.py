@@ -3,7 +3,7 @@ import plotly.graph_objects as go
 import streamlit as st
 
 from core import busqueda as bq
-from ui.componentes import AZUL, GRIS, ORO, PAPEL_CLARO, ROJO, TINTA, TONOS, cabecera, seccion
+from ui.componentes import AZUL, GRIS, ORO, PAPEL_CLARO, ROJO, SOMBRA, TINTA, TONOS, cabecera, seccion
 
 cabecera("Sprint 1 · Búsqueda informada", "Logística de tarjetas con A*",
          "La tarjeta física sale de Bogotá hacia un hub regional y de ahí al barrio y al cliente. A* encuentra la ruta "
@@ -163,13 +163,13 @@ ruta_html = " <span class='flecha-ruta'>→</span> ".join(
     f"<span class='nodo-ruta{' fin' if i == len(res.camino) - 1 else ''}'>{n}</span>" for i, n in enumerate(res.camino))
 st.html(f"""
 <style>
-.st-key-mapa_astar [data-testid="stPlotlyChart"] {{border: 1.6px solid {TINTA}; box-shadow: 5px 5px 0 {AZUL}; padding: 0;
+.st-key-mapa_astar [data-testid="stPlotlyChart"] {{border: 1.2px solid #CFC3A9; box-shadow: inset 0 4px 0 {AZUL}, {SOMBRA}; padding: 0;
   overflow: hidden; border-radius: 12px;}}
 .ruta {{display: flex; flex-wrap: wrap; align-items: center; gap: .45rem; margin: .4rem 0 .2rem;}}
 .ruta .rotulo {{font: 600 .72rem "IBM Plex Mono", monospace; color: {AZUL}; text-transform: uppercase; letter-spacing: .1em;
   margin-right: .3rem;}}
-.nodo-ruta {{background: {PAPEL_CLARO}; border: 1.6px solid {TINTA}; border-radius: 999px; padding: .15rem .8rem;
-  font-weight: 600; box-shadow: 2px 2px 0 {TINTA};}}
+.nodo-ruta {{background: {PAPEL_CLARO}; border: 1.2px solid #A6A093; border-radius: 999px; padding: .15rem .8rem;
+  font-weight: 600;}}
 .nodo-ruta.fin {{background: {ROJO}; color: #fff;}}
 .flecha-ruta {{color: {ROJO}; font: 700 1.4rem "Caveat", cursive;}}
 .estado-astar {{font: 700 1.3rem "Caveat", cursive; color: {ROJO if completo else ORO}; margin-left: auto;}}
