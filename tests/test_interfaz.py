@@ -49,3 +49,19 @@ def test_cuestionario_del_juego_valida_con_la_logica_del_juego():
     at.radio(key="quiz_3").set_value("No").run()
     assert not at.exception
     assert sum("Correcto" in s.value for s in at.success) == 2
+
+
+def test_pagina_astar_conserva_la_logica_en_cada_ciudad_y_paso():
+    from core import busqueda as bq
+    at = _app("vistas/logistica.py")
+    for ciudad in bq.CIUDADES:
+        at.button_group[0].set_value(ciudad).run()
+        destino = at.selectbox[0].value
+        esperado = bq.a_estrella(ciudad, destino)
+        slider = at.slider[0]
+        assert slider.max == len(esperado.expandidos)
+        for paso in range(1, int(slider.max) + 1):
+            slider.set_value(paso).run()
+            assert not at.exception
+        html = "".join(h.proto.body for h in at.get("html"))
+        assert all(n in html for n in esperado.camino)

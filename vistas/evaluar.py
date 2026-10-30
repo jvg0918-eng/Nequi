@@ -4,11 +4,11 @@ import streamlit as st
 from core import integracion
 from core.sistema_experto import PRESETS, condiciones_legibles
 from ui import estado
-from ui.componentes import grafico_salida, lista_reglas, pesos, tarjeta_decision, texto_decision
+from ui.componentes import cabecera, grafico_salida, lista_reglas, pesos, tarjeta_decision, texto_decision
 
-st.title("Evaluar una solicitud de crédito")
-st.caption("Ingresa los datos de la solicitud o carga un caso de ejemplo. Al evaluar, la solicitud pasa en orden por "
-           "el motor de fraude, el score calibrado, el motor de crédito y la capa difusa.")
+cabecera("Flujo integrado · S2 → S3 → S2 → S4", "Evaluar una solicitud de crédito",
+         "Ingresa los datos de la solicitud o carga un caso de ejemplo. Al evaluar, la solicitud pasa en orden por "
+           "el motor de fraude, el score calibrado, el motor de crédito y la capa difusa.", tono="rojo")
 
 NUMERICOS = {
     # campo: (etiqueta, mínimo, máximo, paso, ayuda)

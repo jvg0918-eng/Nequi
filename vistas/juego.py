@@ -4,7 +4,7 @@ import plotly.graph_objects as go
 import streamlit as st
 
 from core import juego_brecha as jb
-from ui.componentes import COLOR_PRIMARIO, COLOR_SECUNDARIO, _layout, cabecera
+from ui.componentes import COLOR_PRIMARIO, COLOR_SECUNDARIO, cabecera, _layout
 
 cabecera("Sprint 3 · Juego de la última entrega", "Brecha Nequi",
          "Un ninja intenta robar y el Guardián de Nequi lo detiene. Cada misión convierte en jugada un concepto del "

@@ -6,11 +6,11 @@ import streamlit as st
 from core import difuso
 from core.integracion import REGLAS_RIGIDAS_NO_DIFUSAS
 from ui import estado
-from ui.componentes import COLOR_PRIMARIO, grafico_pertenencia, grafico_salida, tarjeta_decision
+from ui.componentes import COLOR_PRIMARIO, cabecera, grafico_pertenencia, grafico_salida, tarjeta_decision
 
-st.title("Sprint 4 · Lógica difusa para el riesgo crediticio")
-st.caption("Una capa Mamdani sobre las tres variables numéricas del motor de crédito, para que una diferencia mínima "
-           "en los datos ya no cambie por completo la decisión.")
+cabecera("Sprint 4 · Lógica difusa", "Riesgo crediticio con lógica difusa",
+         "Una capa Mamdani sobre las tres variables numéricas del motor de crédito, para que una diferencia mínima "
+           "en los datos ya no cambie por completo la decisión.", tono="verde")
 
 p_se = estado.params_se()
 cfg = estado.config_difusa()

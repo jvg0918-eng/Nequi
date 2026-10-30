@@ -6,12 +6,12 @@ import streamlit as st
 
 from core import teoria_juegos as tj, teoria_juegos_v4 as v4
 from ui import estado
-from ui.componentes import COLOR_PRIMARIO, grafico_barras_h, grafico_lineas
+from ui.componentes import COLOR_PRIMARIO, cabecera, grafico_barras_h, grafico_lineas
 
-st.title("Sprint 3 · Teoría de juegos con coevolución")
-st.caption("Defensor (motor antifraude) contra atacante (red de fraude). Cada bando es una población que evoluciona "
+cabecera("Sprint 3 · Teoría de juegos", "Coevolución defensor contra atacante",
+         "Defensor (motor antifraude) contra atacante (red de fraude). Cada bando es una población que evoluciona "
            "con (μ+λ), y el fitness de cada individuo es su **pago** contra la población rival. La evolución se usa para "
-           "encontrar un equilibrio sin resolverlo con álgebra, y después se verifica con herramientas de teoría de juegos.")
+           "encontrar un equilibrio sin resolverlo con álgebra, y después se verifica con herramientas de teoría de juegos.", tono="tinta")
 st.markdown("**Clasificación del juego:** no cooperativo, simultáneo y de suma no cero. Se resuelve con Nash y no con "
             "Minimax, porque el atacante maximiza su propia ganancia, no la pérdida del rival.")
 

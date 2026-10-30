@@ -4,12 +4,12 @@ import streamlit as st
 
 from core import evolutivo as ev
 from ui import estado
-from ui.componentes import COLOR_PRIMARIO, grafico_barras_h, grafico_lineas, matriz_confusion
+from ui.componentes import ORO, cabecera, grafico_barras_h, grafico_lineas, matriz_confusion
 
-st.title("Sprint 3 · Estrategia evolutiva (μ+λ)")
-st.caption("Calibra los pesos de las señales F2–F9 y el umbral del score de fraude. La biometría (F1) no es un peso: "
+cabecera("Sprint 3 · Computación evolutiva", "Estrategia evolutiva (μ+λ)",
+         "Calibra los pesos de las señales F2–F9 y el umbral del score de fraude. La biometría (F1) no es un peso: "
            "es un control obligatorio previo. El fitness es el F1-score sobre el 70 % de entrenamiento, y la evaluación "
-           "final se hace sobre el 30 % de prueba, que nunca se usa para seleccionar.")
+           "final se hace sobre el 30 % de prueba, que nunca se usa para seleccionar.", tono="oro")
 
 estado.init()
 p = st.session_state["ee_params"]
@@ -49,7 +49,7 @@ a, b = st.columns(2, gap="large")
 with a:
     rel = mod["pesos"] / mod["pesos"].sum() if mod["pesos"].sum() > 0 else np.zeros_like(mod["pesos"])
     st.plotly_chart(grafico_barras_h(ev.CRITERIOS_SCORE, rel, "Peso relativo de cada señal en el score",
-                                     color=COLOR_PRIMARIO), width="stretch")
+                                     color=ORO), width="stretch")
     st.caption("Los pesos relativos no son probabilidades de fraude.")
 with b:
     h = pd.DataFrame(r["historial"])

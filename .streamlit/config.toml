@@ -15,11 +15,21 @@ font = "IBM Plex Sans:https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wgh
 headingFont = "Fraunces:https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap, serif"
 codeFont = "IBM Plex Mono:https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap, monospace"
 headingFontWeights = [650, 600, 600, 600, 600, 600]
-chartCategoricalColors = ["#c8322a", "#1b1a17", "#8a7f6c", "#2b5c9e", "#b07a10", "#2f7d4f", "#d98c80"]
+redColor = "#c8322a"
+orangeColor = "#b07a10"
+yellowColor = "#b07a10"
+blueColor = "#2b5c9e"
+greenColor = "#2f7d4f"
+chartCategoricalColors = ["#c8322a", "#2b5c9e", "#b07a10", "#2f7d4f", "#1b1a17", "#d98c80", "#8a7f6c"]
 
+# Barra lateral en tinta: máximo contraste con el papel del área principal.
 [theme.sidebar]
-backgroundColor = "#ebe3d0"
-secondaryBackgroundColor = "#e2d8c2"
+backgroundColor = "#1b1a17"
+secondaryBackgroundColor = "#2c2924"
+textColor = "#f1ead9"
+primaryColor = "#ef6a5e"
+linkColor = "#ef6a5e"
+borderColor = "#5a544a"
 
 [client]
 toolbarMode = "minimal"

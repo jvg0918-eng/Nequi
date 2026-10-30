@@ -3,10 +3,11 @@ import streamlit as st
 
 from core import casos_prueba as cp
 from ui import estado
+from ui.componentes import cabecera
 
-st.title("Validación y pruebas")
-st.caption("Casos ejecutados en vivo contra el código de la aplicación. Son los mismos que corre `pytest` en `tests/`. "
-           "Se usan los parámetros por defecto de cada sprint, no los que se hayan editado en la sesión.")
+cabecera("Calidad", "Validación y pruebas",
+         "Casos ejecutados en vivo contra el código de la aplicación. Son los mismos que corre `pytest` en `tests/`. "
+           "Se usan los parámetros por defecto de cada sprint, no los que se hayan editado en la sesión.", tono="verde")
 
 with st.spinner("Ejecutando casos…"):
     res_ee = estado.entrenar_ee(20, 100, 60, 42)

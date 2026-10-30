@@ -4,12 +4,12 @@ import streamlit as st
 from core.sistema_experto import (DEFAULT_PARAMS, GLOSARIO, PRESETS, SistemaExpertoOriginacionCredito,
                                   condiciones_legibles)
 from ui import estado
-from ui.componentes import texto_decision
+from ui.componentes import cabecera, texto_decision
 
-st.title("Sprint 2 · Sistema experto de doble motor")
-st.caption("Dos motores de encadenamiento hacia adelante e independientes: identidad (F1–F9) y crédito (C1–C9). "
+cabecera("Sprint 2 · Sistema experto", "Doble motor de reglas",
+         "Dos motores de encadenamiento hacia adelante e independientes: identidad (F1–F9) y crédito (C1–C9). "
            "El de fraude se evalúa siempre primero, y su cortocircuito evita consultar las centrales de riesgo "
-           "cuando el fraude ya es evidente.")
+           "cuando el fraude ya es evidente.", tono="rojo")
 
 a, b = st.columns(2, gap="large")
 with a, st.container(border=True):
