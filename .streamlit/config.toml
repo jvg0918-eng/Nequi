@@ -25,4 +25,8 @@ secondaryBackgroundColor = "#e2d8c2"
 toolbarMode = "minimal"
 
 [server]
+headless = true
 runOnSave = false
+
+[browser]
+gatherUsageStats = false
