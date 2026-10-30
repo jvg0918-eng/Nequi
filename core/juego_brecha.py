@@ -40,11 +40,20 @@ MISIONES = {
 }
 
 
+# Misma paleta que .streamlit/config.toml. Más específica que los :root del juego, así que lo sustituye.
+PALETA_PAPEL = (
+    'html:root[data-theme="papel"]{--bg:#f1ead9;--panel:#f7f2e6;--panel2:#e8dfca;--border:#3a352d;'
+    '--fg:#1b1a17;--fg-dim:#4a453d;--fg-mute:#7a7264;--nequi:#8f1f19;--nequi2:#c8322a;--gold:#a8700c;'
+    '--dmg:#c8322a;--ok:#2f7d4f;--info:#2b5c9e;--ground:#e3d9c3;--sky1:#f1ead9;--sky2:#ece3cf;'
+    '--on-accent:#ffffff;color-scheme:light}'
+)
+
+
 def html_juego(mision_inicial: str = "m1", reinicio: int = 0) -> str:
     """
     Devuelve el HTML original con dos adaptaciones: la misión inicial se
     puede fijar desde Streamlit (el original la leía de location.hash, que
-    no existe dentro del iframe) y se fija el tema oscuro de la app. El
+    no existe dentro del iframe) y se le aplica la paleta de la app. El
     contador de reinicio fuerza a Streamlit a recrear el iframe con una
     partida nueva.
     """
@@ -55,9 +64,10 @@ def html_juego(mision_inicial: str = "m1", reinicio: int = 0) -> str:
     if original not in html:
         raise RuntimeError("El HTML del juego cambió: no se encontró el punto de inicio de misión.")
     html = html.replace(original, f"const h0=(window.__mision||location.hash||'').replace('#','');")
-    # El tema oscuro de la app se fija también en el juego (sus variables ya lo soportan con data-theme).
+    # El juego pinta el escenario con sus variables CSS (readPal): se le da la paleta «tinta sobre papel» de la app.
     return html.replace("<head>", f"<head><script>window.__mision='{mision_inicial}';"
-                                  f"document.documentElement.dataset.theme='dark';/*partida {reinicio}*/</script>", 1)
+                                  f"document.documentElement.dataset.theme='papel';/*partida {reinicio}*/</script>"
+                                  f"<style>{PALETA_PAPEL}</style>", 1)
 
 
 # ---------------------------------------------------------- cálculo exacto ---

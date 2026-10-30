@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import plotly.graph_objects as go
 import streamlit as st
 
@@ -7,48 +9,63 @@ from ui.componentes import CSS_LLEGADA, _layout
 if st.session_state.pop("llegada_desde_portada", False):
     st.html(CSS_LLEGADA)
 
+ILUSTRACION = Path(__file__).resolve().parent.parent / "assets" / "ladron_tinta.jpg"
+
 st.html("""
 <style>
-.heroe {padding: 1.2rem 0 .4rem;}
-.heroe h1 {font-family: "Fraunces", Georgia, serif; font-weight: 650; font-size: clamp(2.3rem, 5.2vw, 4.3rem); line-height: 1.02;
-  margin: .2rem 0 0; letter-spacing: -.02em; max-width: 15em; color: #ece8f6;}
-.heroe h1 em {font-style: normal; background: linear-gradient(90deg, #b23fd1, #ff5fae); -webkit-background-clip: text;
-  background-clip: text; color: transparent;}
-.heroe p {color: #aaa3c8; font-size: clamp(1rem, 1.3vw, 1.18rem); max-width: 40em; margin-top: 1rem; line-height: 1.55;}
-.cifras {display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); border-top: 1px solid #2a2640;
-  border-bottom: 1px solid #2a2640; margin: 1.4rem 0 .4rem;}
-.cifras {overflow: hidden;}
-.cifras div {padding: 1rem; margin-left: -1px; border-left: 1px solid #2a2640;}
-.cifras b {display: block; font: 600 1.9rem "Fraunces", Georgia, serif; color: #ece8f6;}
-.cifras span {font: 500 .74rem "IBM Plex Mono", monospace; color: #8a82ad; text-transform: uppercase; letter-spacing: .08em;}
-.flujo {display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin: .6rem 0 .2rem; counter-reset: paso;}
+.heroe h1 {font-family: "Fraunces", Georgia, serif; font-weight: 650; font-size: clamp(2.3rem, 4.6vw, 4rem); line-height: 1.02;
+  margin: .2rem 0 0; letter-spacing: -.02em; color: #1b1a17;}
+.heroe h1 em {font-style: normal; color: #c8322a; text-decoration: underline wavy #c8322a; text-decoration-thickness: 2px;
+  text-underline-offset: 8px;}
+.heroe p {color: #4a453d; font-size: clamp(1rem, 1.25vw, 1.15rem); max-width: 34em; margin-top: 1rem; line-height: 1.6;}
+.heroe .nota {display: inline-block; margin-top: .6rem; transform: rotate(-2deg);}
+.cifras {display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); border-top: 1.6px solid #1b1a17;
+  border-bottom: 1.6px solid #1b1a17; margin: .6rem 0 .4rem; overflow: hidden;}
+.cifras div {padding: 1rem; margin-left: -1px; border-left: 1.2px solid #1b1a17;}
+.cifras b {display: block; font: 600 1.9rem "Fraunces", Georgia, serif; color: #1b1a17;}
+.cifras span {font: 500 .74rem "IBM Plex Mono", monospace; color: #6b6458; text-transform: uppercase; letter-spacing: .08em;}
+.flujo {display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; margin: .6rem 0 .2rem;}
 @media (max-width: 820px) {.flujo {grid-template-columns: minmax(0, 1fr);}}
-.flujo div {position: relative; border: 1px solid #2a2640; border-radius: 14px; padding: 1rem 1.05rem; background:
-  linear-gradient(180deg, rgba(178,63,209,.10), rgba(21,19,31,.6));}
-.flujo div::after {content: "→"; position: absolute; right: -14px; top: 50%; transform: translate(50%, -50%);
-  color: #ff5fae; font-size: 1.2rem;}
+.flujo div {position: relative; border: 1.6px solid #1b1a17; padding: 1rem 1.05rem; background: #f7f2e6;
+  border-radius: 255px 14px 225px 14px / 14px 225px 14px 255px;}
+.flujo div::after {content: "→"; position: absolute; right: -16px; top: 50%; transform: translate(50%, -50%);
+  color: #c8322a; font: 700 1.6rem "Caveat", cursive;}
 .flujo div:last-child::after {content: none;}
-@media (max-width: 820px) {.flujo div::after {content: "↓"; right: 50%; top: auto; bottom: -14px; transform: translate(50%, 50%);}}
-.flujo small {font: 600 .7rem "IBM Plex Mono", monospace; color: #ff5fae; letter-spacing: .12em; text-transform: uppercase;}
-.flujo strong {display: block; font: 600 1.15rem "Fraunces", Georgia, serif; margin: .25rem 0 .35rem; color: #ece8f6;}
-.flujo p {margin: 0; color: #aaa3c8; font-size: .9rem; line-height: 1.45;}
-.flujo .fin {font: 500 .78rem "IBM Plex Mono", monospace; color: #ffcc4d; margin-top: .55rem;}
-[class*="st-key-mod_"] {transition: transform .2s ease, border-color .2s ease;}
-[class*="st-key-mod_"]:hover {transform: translateY(-3px); border-color: #ff5fae !important;}
-.st-key-mod_juego {background: linear-gradient(135deg, rgba(178,63,209,.28), rgba(255,95,174,.12));}
+@media (max-width: 820px) {.flujo div::after {content: "↓"; right: 50%; top: auto; bottom: -16px; transform: translate(50%, 50%);}}
+.flujo small {font: 600 .7rem "IBM Plex Mono", monospace; color: #c8322a; letter-spacing: .12em; text-transform: uppercase;}
+.flujo strong {display: block; font: 600 1.15rem "Fraunces", Georgia, serif; margin: .25rem 0 .35rem; color: #1b1a17;}
+.flujo p {margin: 0; color: #4a453d; font-size: .9rem; line-height: 1.45;}
+.flujo .fin {font: 700 1.15rem "Caveat", cursive; color: #c8322a; margin-top: .45rem;}
+[class*="st-key-mod_"] {transition: transform .2s ease, border-color .2s ease; background: #f7f2e6;}
+[class*="st-key-mod_"]:hover {transform: translateY(-3px) rotate(-.4deg); border-color: #c8322a !important;}
+.st-key-mod_juego {background: #f6dcd5;}
+.st-key-ilustracion img {mix-blend-mode: multiply; border-radius: 0;
+  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, #000 62%, transparent 100%);
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, #000 62%, transparent 100%);}
 </style>
+""")
+
+izq, der = st.columns([1.15, 1], gap="large", vertical_alignment="center")
+with izq:
+    st.html("""
 <div class="heroe">
   <div class="ceja">Nequi IA · Fundamentos de IA · Universidad EIA 2026-2</div>
   <h1>Detener al ladrón <em>sin bloquear</em> a los clientes.</h1>
-  <p>Cada solicitud de crédito puede venir de un cliente real o de alguien que se hace pasar por él. Este proyecto
-  combina cinco técnicas de inteligencia artificial para decidir, de forma auditable, a quién aprobar, a quién revisar
-  y a quién detener. Todo sobre un caso simulado.</p>
-  <div class="cifras">
-    <div><b>18</b><span>reglas de fraude y crédito</span></div>
-    <div><b>0.8947</b><span>F1 del score calibrado</span></div>
-    <div><b>256</b><span>combinaciones de señales</span></div>
-    <div><b>0–100</b><span>riesgo difuso continuo</span></div>
-  </div>
+  <p>Cada solicitud de crédito puede venir de un cliente real o de alguien que se hace pasar por él, tirando de los
+  hilos de dinero, tarjeta, clave y datos. Este proyecto combina cinco técnicas de inteligencia artificial para decidir,
+  de forma auditable, a quién aprobar, a quién revisar y a quién detener. Todo sobre un caso simulado.</p>
+  <span class="nota">cada hilo rojo es una señal de fraude →</span>
+</div>
+""")
+with der, st.container(key="ilustracion"):
+    st.image(str(ILUSTRACION), width="stretch")
+
+st.html("""
+<div class="cifras">
+  <div><b>18</b><span>reglas de fraude y crédito</span></div>
+  <div><b>0.8947</b><span>F1 del score calibrado</span></div>
+  <div><b>256</b><span>combinaciones de señales</span></div>
+  <div><b>0–100</b><span>riesgo difuso continuo</span></div>
 </div>
 """)
 
@@ -77,8 +94,8 @@ with izq:
                "lógica del juego (`core/juego_brecha.py`).")
 with der:
     fig = go.Figure([
-        go.Bar(y=["Costo"], x=[r["costo_fraude"] * 1000], name="Fraude que pasa", orientation="h", marker_color="#FF5A6E"),
-        go.Bar(y=["Costo"], x=[r["costo_clientes"] * 1000], name="Clientes bloqueados", orientation="h", marker_color="#4FB4FF"),
+        go.Bar(y=["Costo"], x=[r["costo_fraude"] * 1000], name="Fraude que pasa", orientation="h", marker_color="#C8322A"),
+        go.Bar(y=["Costo"], x=[r["costo_clientes"] * 1000], name="Clientes bloqueados", orientation="h", marker_color="#1B1A17"),
     ])
     fig.update_layout(barmode="stack")
     fig.update_xaxes(title="Costo esperado por cada 1000 transacciones", range=[0, 60])

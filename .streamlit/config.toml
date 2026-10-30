@@ -1,24 +1,25 @@
-# Identidad visual compartida con el juego «Brecha Nequi» (assets/brecha_nequi.html):
-# fondo nocturno, magenta Nequi como acento y tipografías Fraunces / IBM Plex.
+# Estética «tinta sobre papel»: fondo crema, trazo negro y un único acento rojo
+# (el hilo rojo de la ilustración assets/ladron_tinta.jpg). El juego Brecha Nequi
+# recibe la misma paleta desde core/juego_brecha.py.
 [theme]
-base = "dark"
-primaryColor = "#ff5fae"
-backgroundColor = "#0b0a14"
-secondaryBackgroundColor = "#15131f"
-textColor = "#ece8f6"
-linkColor = "#ff8cc4"
-borderColor = "#2a2640"
+base = "light"
+primaryColor = "#c8322a"
+backgroundColor = "#f1ead9"
+secondaryBackgroundColor = "#e8dfca"
+textColor = "#1b1a17"
+linkColor = "#c8322a"
+borderColor = "#3a352d"
 showWidgetBorder = true
-baseRadius = "10px"
+baseRadius = "6px"
 font = "IBM Plex Sans:https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap, sans-serif"
 headingFont = "Fraunces:https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap, serif"
 codeFont = "IBM Plex Mono:https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap, monospace"
 headingFontWeights = [650, 600, 600, 600, 600, 600]
-chartCategoricalColors = ["#ff5fae", "#4fb4ff", "#ffcc4d", "#35e2a0", "#b23fd1", "#ff8a4c", "#8a82ad"]
+chartCategoricalColors = ["#c8322a", "#1b1a17", "#8a7f6c", "#2b5c9e", "#b07a10", "#2f7d4f", "#d98c80"]
 
 [theme.sidebar]
-backgroundColor = "#0f0d1a"
-secondaryBackgroundColor = "#1a1728"
+backgroundColor = "#ebe3d0"
+secondaryBackgroundColor = "#e2d8c2"
 
 [client]
 toolbarMode = "minimal"

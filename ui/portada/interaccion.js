@@ -27,8 +27,8 @@ export default function (component) {
     const r = raiz.getBoundingClientRect();
     const vertical = r.width / Math.max(r.height, 1) < 0.9;
     raiz.classList.toggle("vertical", vertical);
-    svg.setAttribute("viewBox", vertical ? "500 230 780 670" : "0 0 1600 900");
-    svg.setAttribute("preserveAspectRatio", vertical ? "xMidYMax meet" : "xMidYMax slice");
+    svg.setAttribute("viewBox", vertical ? "470 170 1000 670" : "0 0 1600 900");
+    svg.setAttribute("preserveAspectRatio", vertical ? "xMidYMid meet" : "xMidYMax slice");
   }
 
   function cajaLadron() {

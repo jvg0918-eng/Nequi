@@ -14,19 +14,22 @@ st.html('<div class="num">A · ANTES DE JUGAR</div>')
 # ============================================================ A. INTRODUCCIÓN ===
 ESCENA = """
 <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Escena del juego: el ninja recoge señales y cruza el arco de revisión del Guardián" style="width:100%;height:auto;max-height:260px">
-  <defs><linearGradient id="cielo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c1430"/><stop offset="1" stop-color="#0a0c14"/></linearGradient></defs>
-  <rect width="760" height="230" rx="14" fill="url(#cielo)"/>
-  <g fill="#12111c" opacity=".9"><rect x="40" y="70" width="60" height="110"/><rect x="120" y="100" width="45" height="80"/><rect x="520" y="60" width="70" height="120"/><rect x="610" y="95" width="50" height="85"/></g>
-  <rect y="180" width="760" height="50" fill="#1a1730"/><rect y="180" width="760" height="2" fill="#2a2640"/>
+  <rect x="2" y="2" width="756" height="226" rx="10" fill="#f7f2e6" stroke="#2b2824" stroke-width="1.6"/>
+  <g fill="none" stroke="#2b2824" stroke-width="1.4" stroke-linecap="round" opacity=".55">
+    <path d="M40,180 L40,72 L98,70 L100,180 M120,180 L121,102 L164,100 L165,180 M520,180 L521,62 L588,60 L590,180 M610,180 L611,96 L658,95 L660,180"/>
+    <path d="M52,90 h10 M76,90 h10 M52,112 h10 M76,112 h10 M534,82 h10 M560,82 h10 M534,104 h10"/>
+  </g>
+  <path d="M12,181 Q200,177 380,182 T748,180" fill="none" stroke="#2b2824" stroke-width="2" stroke-linecap="round"/>
   <text x="70" y="178" font-size="54">🥷</text>
+  <path d="M120,150 C160,90 200,170 240,110 S320,160 360,105 S420,120 440,90" fill="none" stroke="#c8322a" stroke-width="2.4" stroke-linecap="round"/>
   <g font-size="26"><text x="175" y="150">📱</text><text x="235" y="110">⚡</text><text x="295" y="150">🌐</text><text x="355" y="110">🔑</text></g>
-  <g font-family="sans-serif" font-size="11" fill="#ffcc4d" text-anchor="middle"><text x="190" y="172">+0.6</text><text x="250" y="132">+0.6</text><text x="310" y="172">+0.6</text><text x="370" y="132">+0.6</text></g>
-  <text x="430" y="66" font-size="26">👁</text><rect x="434" y="72" width="14" height="108" fill="#ff5a6e" opacity=".25"/>
-  <text x="441" y="44" font-family="sans-serif" font-size="11" fill="#aaa3c8" text-anchor="middle">F10 · no la controlas</text>
-  <g fill="#35e2a0"><rect x="505" y="30" width="6" height="150"/><rect x="551" y="30" width="6" height="150"/><rect x="505" y="24" width="52" height="8"/></g>
-  <text x="531" y="16" font-family="sans-serif" font-size="11" fill="#35e2a0" text-anchor="middle">revisión: puntaje vs umbral</text>
+  <g font-family="Caveat, cursive" font-size="17" fill="#c8322a" text-anchor="middle" font-weight="700"><text x="190" y="172">+0.6</text><text x="250" y="132">+0.6</text><text x="310" y="172">+0.6</text><text x="370" y="132">+0.6</text></g>
+  <text x="430" y="66" font-size="26">👁</text><path d="M441,74 L441,178" stroke="#c8322a" stroke-width="2" stroke-dasharray="5 5"/>
+  <text x="441" y="44" font-family="Caveat, cursive" font-size="17" fill="#4a453d" text-anchor="middle">F10 · no la controlas</text>
+  <path d="M505,180 L506,32 Q531,18 556,32 L557,180" fill="none" stroke="#1b1a17" stroke-width="3" stroke-linecap="round"/>
+  <text x="531" y="16" font-family="Caveat, cursive" font-size="17" fill="#1b1a17" text-anchor="middle">revisión: puntaje vs umbral</text>
   <text x="640" y="178" font-size="60" transform="translate(1280,0) scale(-1,1)">🛡️</text>
-  <text x="670" y="112" font-family="sans-serif" font-size="11" fill="#aaa3c8" text-anchor="middle">Guardián Nequi</text>
+  <text x="670" y="112" font-family="Caveat, cursive" font-size="17" fill="#4a453d" text-anchor="middle">Guardián Nequi</text>
 </svg>
 """
 
@@ -91,17 +94,17 @@ t_flujo, t_m1, t_m2, t_m3, t_m4 = st.tabs(["Flujo de una jugada", "Misión 1", "
 with t_flujo:
     st.graphviz_chart("""
 digraph G {
-  rankdir=TB; nodesep=0.5; bgcolor="transparent"; node [shape=box, style="rounded,filled", fontname="sans-serif", fontsize=12, color="#999999", fontcolor="#1d1a2e"];
-  edge [fontname="sans-serif", fontsize=10, color="#8a82ad", fontcolor="#c9c3e0"];
+  rankdir=TB; nodesep=0.5; bgcolor="transparent"; node [shape=box, style="rounded,filled", fontname="sans-serif", fontsize=12, color="#2b2824", fontcolor="#1b1a17", penwidth=1.3];
+  edge [fontname="sans-serif", fontsize=10, color="#2b2824", fontcolor="#4a453d"];
   {rank=same; a; f10;}
-  a [label="Ninja elige señales\\nF2–F9 (+0.6 c/u)", fillcolor="#fde2ef"];
-  f10 [label="F10 aparece\\n(40 %, no controlable)", fillcolor="#fde2ef"];
-  bio [label="¿Biometría falsa\\n(F1)?", shape=diamond, fillcolor="#eef2f7"];
-  s [label="Puntaje = Σ pesos activos\\n÷ Σ todos los pesos", fillcolor="#eef2f7"];
-  u [label="¿Puntaje > umbral\\ndel Guardián?", shape=diamond, fillcolor="#eef2f7"];
-  b [label="Bloqueado\\nbotín 0", fillcolor="#dcfce7"];
-  p [label="Pasa\\nbotín 1 + 0.6·k", fillcolor="#fee2e2"];
-  c [label="Costo de Nequi =\\n0.02·botín + 0.98·0.15·FPR", fillcolor="#fef3c7"];
+  a [label="Ninja elige señales\\nF2–F9 (+0.6 c/u)", fillcolor="#f6dcd5"];
+  f10 [label="F10 aparece\\n(40 %, no controlable)", fillcolor="#f6dcd5"];
+  bio [label="¿Biometría falsa\\n(F1)?", shape=diamond, fillcolor="#f7f2e6"];
+  s [label="Puntaje = Σ pesos activos\\n÷ Σ todos los pesos", fillcolor="#f7f2e6"];
+  u [label="¿Puntaje > umbral\\ndel Guardián?", shape=diamond, fillcolor="#f7f2e6"];
+  b [label="Bloqueado\\nbotín 0", fillcolor="#dfe9dc"];
+  p [label="Pasa\\nbotín 1 + 0.6·k", fillcolor="#f6dcd5"];
+  c [label="Costo de Nequi =\\n0.02·botín + 0.98·0.15·FPR", fillcolor="#f3e6c4"];
   a -> bio; f10 -> s; bio -> b [label="sí"]; bio -> s [label="no"]; s -> u; u -> b [label="sí"]; u -> p [label="no"];
   p -> c; b -> c [label="clientes legítimos\\nbloqueados también cuestan"];
 }""", width="stretch")
@@ -142,7 +145,7 @@ with t_m2:
                 "para cada umbral (fraude que pasa + clientes legítimos bloqueados).")
     fig = go.Figure()
     resumen = []
-    for (nombre, pc), color in zip(jb.ESTILOS.items(), ["#16A34A", "#F59E0B", "#DC2626"]):
+    for (nombre, pc), color in zip(jb.ESTILOS.items(), ["#2F7D4F", "#B07A10", "#C8322A"]):
         us, cs, best = jb.curva_costo(pc)
         fig.add_trace(go.Scatter(x=us, y=cs, name=f"Ninja {nombre.lower()} ({pc:.0%})", line=dict(color=color, width=2.3, shape="hv")))
         fig.add_trace(go.Scatter(x=[best["umbral"]], y=[best["costo"]], mode="markers", marker=dict(size=10, color=color, symbol="star"),
@@ -161,7 +164,7 @@ with t_m2:
     estilo_sel = e2.radio("Ninja", list(jb.ESTILOS), index=1, horizontal=True, key="m2_estilo")
     r_sel = jb.costo_exacto(u_sel, jb.ESTILOS[estilo_sel])
     fig.add_trace(go.Scatter(x=[u_sel], y=[r_sel["costo"]], mode="markers", name="Tu elección",
-                             marker=dict(size=14, color="#FFFFFF", line=dict(width=3, color=COLOR_PRIMARIO))))
+                             marker=dict(size=14, color="#F1EAD9", line=dict(width=3, color=COLOR_PRIMARIO))))
     st.plotly_chart(_layout(fig, 340), width="stretch")
     _, _, opt_sel = jb.curva_costo(jb.ESTILOS[estilo_sel])
     k = st.columns(4)
@@ -189,15 +192,15 @@ with t_m3:
                 "contra tus últimos 4 ataques. Desde la oleada 3 aparece F10.")
     st.graphviz_chart("""
 digraph G {
-  rankdir=LR; bgcolor="transparent"; node [shape=box, style="rounded,filled", fontname="sans-serif", fontsize=11, color="#999999", fillcolor="#eef2f7", fontcolor="#1d1a2e"];
-  edge [fontname="sans-serif", fontsize=10, color="#8a82ad", fontcolor="#c9c3e0"];
-  o [label="Oleada: tus 60 fraudes\\ncon las señales que elegiste", fillcolor="#fde2ef"];
+  rankdir=LR; bgcolor="transparent"; node [shape=box, style="rounded,filled", fontname="sans-serif", fontsize=11, color="#2b2824", fillcolor="#f7f2e6", fontcolor="#1b1a17", penwidth=1.3];
+  edge [fontname="sans-serif", fontsize=10, color="#2b2824", fontcolor="#4a453d"];
+  o [label="Oleada: tus 60 fraudes\\ncon las señales que elegiste", fillcolor="#f6dcd5"];
   e [label="1 · Evaluar\\n6 Guardianes vs. tus\\núltimos 4 ataques"];
   x [label="2 · Cruce intermedio\\nhijo entre dos padres"];
   m [label="3 · Mutación\\nσ' = σ·e^(τN), genes + N(0,σ')"];
   h [label="4 · 16 hijos evaluados"];
   s [label="5 · Selección (μ+λ)\\nsobreviven los 6 de menor costo"];
-  g [label="Nuevo Guardián\\n(más pesos donde atacas)", fillcolor="#dcfce7"];
+  g [label="Nuevo Guardián\\n(más pesos donde atacas)", fillcolor="#dfe9dc"];
   o -> e -> x -> m -> h -> s -> g; g -> o [label="siguiente oleada", style=dashed];
 }""", width="stretch")
     st.markdown("- **Si repites la ruta**, el Guardián sube el peso de esas señales y tu botín cae: eso es la **convergencia**.\n"
@@ -215,10 +218,10 @@ with t_m4:
     st.dataframe(tabla, width="stretch")
     st.graphviz_chart("""
 digraph G {
-  rankdir=LR; bgcolor="transparent"; node [shape=box, style="rounded,filled", fontname="sans-serif", fontsize=11, color="#999999", fontcolor="#1d1a2e"];
-  edge [fontname="sans-serif", fontsize=10, color="#8a82ad", fontcolor="#c9c3e0"];
-  e [label="Nequi ESTRICTO", fillcolor="#dbeafe"]; s [label="Ninja SIGILOSO", fillcolor="#fde2ef"];
-  l [label="Nequi LAXO", fillcolor="#dbeafe"]; a [label="Ninja AGRESIVO", fillcolor="#fde2ef"];
+  rankdir=LR; bgcolor="transparent"; node [shape=box, style="rounded,filled", fontname="sans-serif", fontsize=11, color="#2b2824", fontcolor="#1b1a17", penwidth=1.3];
+  edge [fontname="sans-serif", fontsize=10, color="#2b2824", fontcolor="#4a453d"];
+  e [label="Nequi ESTRICTO", fillcolor="#e9e2d0"]; s [label="Ninja SIGILOSO", fillcolor="#f6dcd5"];
+  l [label="Nequi LAXO", fillcolor="#e9e2d0"]; a [label="Ninja AGRESIVO", fillcolor="#f6dcd5"];
   e -> s [label="al ninja le conviene"]; s -> l [label="a Nequi le conviene"]; l -> a [label="al ninja le conviene"]; a -> e [label="a Nequi le conviene"];
 }""", width="stretch")
     st.markdown("El ciclo nunca se cierra en una celda: **no hay equilibrio en estrategias puras**. Cada bando debe mezclar "
@@ -226,16 +229,16 @@ digraph G {
     p = np.linspace(0, 1, 101)
     ag = p * jb.B2[0, 0] + (1 - p) * jb.B2[1, 0]
     si = p * jb.B2[0, 1] + (1 - p) * jb.B2[1, 1]
-    fig = go.Figure([go.Scatter(x=p, y=ag, name="Ninja AGRESIVO", line=dict(color="#DC2626", width=2.3)),
+    fig = go.Figure([go.Scatter(x=p, y=ag, name="Ninja AGRESIVO", line=dict(color=COLOR_PRIMARIO, width=2.3)),
                      go.Scatter(x=p, y=si, name="Ninja SIGILOSO", line=dict(color=COLOR_SECUNDARIO, width=2.3))])
-    fig.add_vline(x=eq["p_estricto"], line_dash="dash", line_color=COLOR_PRIMARIO,
+    fig.add_vline(x=eq["p_estricto"], line_dash="dash", line_color="#8A7F6C",
                   annotation_text=f"p* = {eq['p_estricto']:.3f}")
     fig.update_xaxes(title="Probabilidad de que Nequi sea ESTRICTO (p)")
     fig.update_yaxes(title="Pago esperado del ninja")
     st.markdown("##### Reto: encuentra la mezcla que no deja explotar a Nequi")
     p_sel = st.slider("Probabilidad de que Nequi sea ESTRICTO", 0.0, 1.0, 0.80, 0.01, key="m4_p")
     pago_ag, pago_si = p_sel * jb.B2[0, 0] + (1 - p_sel) * jb.B2[1, 0], p_sel * jb.B2[0, 1] + (1 - p_sel) * jb.B2[1, 1]
-    fig.add_vline(x=p_sel, line_color="#FFFFFF", line_width=2)
+    fig.add_vline(x=p_sel, line_color="#1B1A17", line_width=2)
     st.plotly_chart(_layout(fig, 300, "Condición de indiferencia del ninja"), width="stretch")
     if abs(pago_ag - pago_si) < 0.02:
         st.success(f"¡Equilibrio! Con p = {p_sel:.2f} al ninja le da igual atacar agresivo ({pago_ag:.3f}) o sigiloso "

@@ -13,9 +13,9 @@ def test_html_del_juego_conserva_el_original_y_fija_mision_y_tema():
     html = jb.html_juego("m4", 3)
     original = jb.RUTA_HTML.read_text(encoding="utf-8")
     assert "window.__mision='m4'" in html
-    assert "dataset.theme='dark'" in html
+    assert "dataset.theme='papel'" in html and jb.PALETA_PAPEL in html
     # Fuera de las dos adaptaciones, el juego es el mismo archivo de la entrega.
-    assert len(html) - len(original) < 200
+    assert len(html) - len(original) - len(jb.PALETA_PAPEL) < 200
     with pytest.raises(ValueError):
         jb.html_juego("m9")
 

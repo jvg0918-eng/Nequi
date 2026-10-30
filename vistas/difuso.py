@@ -133,7 +133,7 @@ def superficie(umbrales: tuple, anchos: tuple, dti: float, n=41):
 st.subheader("Superficie de decisión: rígida frente a difusa")
 dti_fijo = st.slider("DTI fijo para la superficie", 0.0, 1.0, 0.30, 0.05)
 ss, cc, z = superficie(tuple(sorted(p_se.items())), tuple(sorted(st.session_state["anchos_difusos"].items())), dti_fijo)
-fig = go.Figure(go.Heatmap(x=ss, y=cc, z=z, colorscale=[[0, "#16A34A"], [0.5, "#F59E0B"], [1, "#DC2626"]],
+fig = go.Figure(go.Heatmap(x=ss, y=cc, z=z, colorscale=[[0, "#2F7D4F"], [0.5, "#E3C77A"], [1, "#C8322A"]],
                            zmin=0, zmax=100, colorbar=dict(title="Riesgo")))
 fig.add_vline(x=p_se["C1"], line_dash="dash", line_color="white", annotation_text=f"C1 rígida ({p_se['C1']:g})")
 fig.add_hline(y=p_se["C2"], line_dash="dash", line_color="white", annotation_text=f"C2 rígida ({p_se['C2']:g})")

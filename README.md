@@ -14,20 +14,22 @@ Aplicación Streamlit que integra en un solo flujo el proyecto semestral de **Fu
 
 ## Experiencia
 
-1. **Portada interactiva.** La app abre con una escena nocturna: un ladrón se acerca a la bóveda de Nequi y una cerca
-   de sensores (F2–F9) lo vigila. Sus ojos siguen el cursor y la linterna ilumina donde apuntas. Al hacer clic en él
-   (o pulsar Enter con el foco), queda «¡Atrapado!» y un telón magenta lleva a la página principal.
+1. **Portada interactiva.** Una ilustración a tinta sobre papel: el ladrón tira de un hilo rojo que une dinero,
+   tarjeta, clave y datos con la bóveda en un portátil. Sus ojos siguen el cursor; al pasar por encima el hilo se
+   tensa. Al hacer clic en él (o pulsar Enter con el foco), un círculo de lápiz rojo lo encierra, el hilo se corta,
+   aparece «¡Atrapado!» y una mancha roja lleva a la página principal.
 2. **Inicio.** Presenta el problema (bloquear fraude cuesta clientes; se puede probar con un umbral en vivo calculado
    con la lógica del juego), el recorrido de una solicitud, acceso a cada módulo y enlaces al repositorio y a la app.
 3. **Juego Brecha Nequi.** A · introducción visual y reglas, B · el juego original jugable dentro de la página,
    C · explicaciones calculadas con su misma lógica (con exploradores interactivos del umbral y del equilibrio mixto),
    D · qué lógica comparte con el resto del proyecto y qué relación es solo conceptual, E · preguntas de comprobación.
 
-**Diseño.** La portada toma de *Don't Board Me* la idea de una entrada lúdica, con un personaje ilustrado que es la
-acción principal. El resto de la app toma de *Prometheus Fuels* la sobriedad técnica: fondo oscuro, cejas en
-monoespaciada, títulos grandes con serifa, secciones numeradas y pocas animaciones. La paleta (magenta y violeta
-Nequi, oro y verde) y las tipografías (Fraunces, IBM Plex Sans y Mono) son las del juego, así que la portada, la app
-y el juego se ven como una sola pieza. El tema está en `.streamlit/config.toml`.
+**Diseño.** Estética de dibujo a tinta sobre papel crema con un único acento rojo, tomada de la ilustración
+`assets/ladron_tinta.jpg` (que abre la página de inicio): trazo negro, bordes irregulares hechos a mano, notas en
+letra manuscrita (Caveat), títulos con serifa (Fraunces) y texto en IBM Plex. La portada es la parte lúdica, con un
+personaje ilustrado como acción principal. El resto de la app es más sobrio: secciones numeradas, jerarquía
+tipográfica clara y pocas animaciones. El tema está en `.streamlit/config.toml`, y el juego recibe la misma paleta
+desde `core/juego_brecha.py` sin modificar su archivo.
 
 > Todos los datos son simulados y todos los parámetros son supuestos académicos. No se usan datos ni sistemas reales de Nequi.
 
@@ -89,6 +91,7 @@ TrabajoIA/
 │   ├── estado.py             # Estado de sesión y caché de cálculos
 │   └── portada/              # Portada: escena.html, estilo.css, interaccion.js (componente st.components.v2)
 ├── assets/brecha_nequi.html  # Juego de la última entrega (copia sin cambios)
+├── assets/ladron_tinta.jpg   # Ilustración de referencia del estilo visual
 ├── vistas/                   # Una página por sección (portada.py es la página por defecto)
 ├── tests/                    # test_casos.py (lógica) y test_interfaz.py (portada y juego)
 ├── docs/ANALISIS.md
